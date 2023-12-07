@@ -1,40 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+        integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
     <title>Your Name</title>
 </head>
+
 <body>
     <div class="grid-2">
         <div class="section-1">
-            <i class="fas fa-code fa-5x white"></i>
-            <h2>FirstName LastName</h2>
-            <p>City,Country.</p>
-            <a href="#"><i class="fab fa-twitter"></i></a>
+            <i><img src="profile_img.jpg" alt="Baha Mabrouk"
+                    style="border-radius: 45%; height: 300px; ; width : 300px "></i>
+            <h2>BAHA MABROUK</h2>
+            <p>Ariana,Tunisia</p>
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-kaggle"></i></a>
             <a href="#"><i class="fab fa-linkedin"></i></a>
             <a href="#"><i class="fab fa-github"></i></a>
         </div>
         <div class="section-2">
             <h2>About</h2>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis quas sint et nihil iusto eius nostrum sit error, repellat optio quisquam! Magnam dolore iusto cumque. Nostrum error iste neque maiores.</p>
+            <p>I'm pursuing a Computer Engineering
+                degree and majoring in Data Science, I'm highly motivated and curious, with a
+                quick learning rate thanks to a good CPU, in addition to an respectable GPU
+                which allows for a good display of important information, and various other features that
+                allow for an impeccable user experience.
+            </p>
+
             <h2>Experience</h2>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis in maiores autem quidem.</p>
+
+            <p>
+            <h3 style="color:rgb(182, 182, 182);">Intern at DigmaCo,</h3>
+            <h4 style="color:rgb(170, 170, 170);"> June 2022–August 2022</h4>
+
+            Created a component for one of the most successful esports website in the country, which allowed the
+            company
+            to utilize the Facebook API to help manage the digital
+            marketing campaign.
+
+            </p>
+
+            <p>
+            <h3 style=" color:rgb(182, 182, 182);">Data Science Intern at CRISTAL Laboratory -GRIFT</h3>
+            <h4 style="color:rgb(182, 182, 182);">July 2023 – September 2023</h4>
+
+            Created and implemented a one page web app that
+            provides disease prediction based on symptoms, using
+            machine learning models that were trained on carefully
+            extracted and processed data, and deployed using Flask
+            </p>
 
             <h2>Skills</h2>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis in maiores autem quidem obcaecati excepturi! Cupiditate eaque itaque magni voluptatibus neque nobis est dolor? Atque sunt minus ipsa asperiores. At.</p>
+            <p>Python
+                Machine Learning <br />
+                Deep Learning(Tensorflow, Keras) <br />
+                Data Visualisation(PowerBI,Spss,Python) <br />
+                Big Data(Hadoop, Spark)<br />
+                Cloud(Azur)<br />
+                Strong Communication<br />
+                Strong analytical skills
+            </p>
+
+
             <h2>Projects</h2>
-            <a href="#">Project 1</a>
-            <a href="#">Project 2</a>
-            <a href="#">Project 3</a>
-            <a href="#">Project 4</a>
-            <a href="#">Project 5</a>
+
+            <a href="#" onclick="openModal('notebooks/PDL-churn.html')">Telecom CHURN Prediction</a>
+            <a href="#" onclick="openModal('path_to_html_output.html')">Project 2</a>
+            <a href="#" onclick="openModal('path_to_html_output.html')">Project 2</a>
+            <a href="#" onclick="openModal('path_to_html_output.html')">Project 2</a>
+
+            <div id="myModal" class="modal">
+                <span class="exit-button" onclick="closeModal()">&times; Exit</span>
+                <iframe id="iframeEmbed" class="iframe-container" src="" frameborder="0"></iframe>
+            </div>
+
+
             <h2>Contact</h2>
-            <p>myEmail@email.com</p>
+            <p><a href="mailto:mail:Mabrouk.Baha1@gmail.com">Mabrouk.Baha1@gmail .com</a></p>
         </div>
     </div>
+
+
+    <script>
+        function openModal(htmlPath) {
+            var modal = document.getElementById("myModal");
+            var iframeEmbed = document.getElementById("iframeEmbed");
+            modal.style.display = "flex";
+            iframeEmbed.src = htmlPath;
+        }
+
+        function closeModal() {
+            var modal = document.getElementById("myModal");
+            var iframeEmbed = document.getElementById("iframeEmbed");
+            modal.style.display = "none";
+            // Clear the iframe source to stop it from loading in the background
+            iframeEmbed.src = "";
+        }
+    </script>
 </body>
+
 </html>
