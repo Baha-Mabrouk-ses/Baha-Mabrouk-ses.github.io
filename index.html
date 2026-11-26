@@ -1,144 +1,307 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta http-equiv='cache-control' content='no-cache'> 
-    <meta http-equiv='expires' content='0'> 
-    <meta http-equiv='pragma' content='no-cache'>
-
+    <meta name="description" content="Baha Mabrouk - Lead AI Engineer specializing in Computer Vision and AI Systems.">
+    <title>Baha Mabrouk | Lead AI Engineer</title>
+    <link rel="icon" type="image/x-icon" href="favi.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:wght@500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
         integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">
-    <title>Baha Mabrouk</title>
-    <link rel="icon" type="image/x-icon" href="favi.png">
-
+    <link rel="stylesheet" href="style.css?v=4">
 </head>
-
 <body>
-    <div class="grid-2">
-        <div class="section-1">
-            <i><img src="Profile_im.png" alt="Baha Mabrouk"
-                    style="border-radius: 45%; height: 300px; ; width : 300px "></i>
-            <h2>BAHA MABROUK</h2>
-            <p>Lead AI Engineer • Computer Vision • AI Systems</p>
-            <p>Sousse,Tunisia</p>
-            <a href="https://www.facebook.com/Ba1haa/" target="_blank"><i class="fab fa-facebook"></i></a>
-            <a href="https://www.kaggle.com/bahamabroukpers" target="_blank"><i class="fab fa-kaggle"></i></a>
-            <a href="https://www.linkedin.com/in/baha-mabrouk-cmp/" target="_blank"><i class="fab fa-linkedin"></i></a>
-            <a href="https://github.com/Baha-Mabrouk-ses" target="_blank"><i class="fab fa-github"></i></a>
+    <canvas id="bg"></canvas>
+
+    <nav>
+        <div class="container">
+            <a href="#hero" class="logo">B<span>M</span></a>
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#leadership">Leadership</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#education">Education</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
         </div>
-        <div class="section-2">
-            <h2>About</h2>
-            <p>
-            I am a <strong>Lead AI Engineer</strong> specializing in Computer Vision, Deep Learning, and AI Systems Engineering. I design and build production-ready AI solutions that transform live visual data into actionable insights, from intelligent video analytics and edge AI deployment to scalable cloud-based AI services.
-            
-            My expertise spans the complete AI lifecycle, including model development, optimization, distributed inference, MLOps, and AI system architecture. I have led the development of commercial computer vision products involving real-time object detection, tracking, segmentation, face recognition, action recognition, retail analytics, industrial monitoring, and intelligent surveillance systems.
-            
-            Beyond model development, I focus on building reliable AI platforms that integrate modern deep learning, edge computing, cloud infrastructure, and software engineering best practices to deliver scalable, maintainable, and high-performance AI products.
-            </p>
+    </nav>
 
-            <h2>Experience</h2>
-
-
-                <p>
-                <h3 style="color:rgb(182,182,182);">Lead AI Engineer</h3>
-                <h4 style="color:rgb(170,170,170);">2025 – Present</h4>
-                
-                <p>
-                Leading the research, design, and development of production-grade AI systems focused on Computer Vision and intelligent video analytics. Responsible for translating business requirements into scalable AI products while driving architecture decisions, research initiatives, and deployment strategies.
-                </p>
-                
-                <p><strong>Key responsibilities include:</strong></p>
-                
-                <ul>
-                <li>Designing and deploying end-to-end Computer Vision solutions for real-time analytics and automation.</li>
-                
-                <li>Building intelligent video analytics systems including object detection, tracking, face recognition, people counting, action recognition, PPE monitoring, retail analytics, and security applications.</li>
-                
-                <li>Optimizing deep learning models for NVIDIA Jetson platforms, TensorRT, ONNX Runtime, and edge deployment.</li>
-                
-                <li>Leading AI research and evaluating state-of-the-art foundation models for commercial applications.</li>
-                
-                <li>Developing scalable inference pipelines capable of processing multiple live camera streams.</li>
-                
-                <li>Architecting AI services using Python, PyTorch, Docker, REST APIs, cloud infrastructure, and distributed systems.</li>
-                
-                <li>Collaborating with product and engineering teams to transform research prototypes into production-ready software.</li>
-                
-                <li>Mentoring AI engineers and contributing to technical strategy, system architecture, and R&D direction.</li>
-                </ul>
-</p>
-
-                <h2>Skills</h2>
-                
-                <p>
-                Python <br>
-                PyTorch <br>
-                Computer Vision <br>
-                Deep Learning <br>
-                Generative AI & Foundation Models <br>
-                Object Detection & Segmentation <br>
-                Multi-Object Tracking <br>
-                AI Systems Architecture <br>
-                Edge AI (Jetson, TensorRT, ONNX) <br>
-                Distributed Inference <br>
-                MLOps & Deployment <br>
-                Docker <br>
-                REST APIs <br>
-                Cloud Computing <br>
-                SQL <br>
-                Azure ML <br>
-                OpenCV <br>
-                Git
-                </p>
-
-
-            <h2>Projects</h2>
-
-           <!-- <a href="#" onclick="openModal('notebooks/PDL-churn.html')">Telecom CHURN Prediction</a> -->
-            <!--<a href="https://github.com/Baha-Mabrouk-ses/Car_Pred/">Used car price prediction </a>-->
-            <!--<a href=" https://github.com/Baha-Mabrouk-ses/Flask_Disease_prediction">Symptom based dignoses</a>-->
-            <a href="#" onclick="openModal('notebooks/Morphing of facial 3D mesh.pdf')"> Morphing of facial 3D mesh</a>
-            <a href="#" onclick="openModal('notebooks/Poster.pdf')">Semantic general counting using segmentation model</a>
-            <a href="#" onclick="openModal('AI_Vision_sys.png')">complete computer vision security system</a>
-            <a href="#" onclick="openModal('T_Analysis_sys.png')">Traffic analysis and crash detection</a>
-
-            
-
-
-
-
-            <div id="myModal" class="modal">
-                <span class="exit-button" onclick="closeModal()">&times; Exit</span>
-                <iframe id="iframeEmbed" class="iframe-container" src="" frameborder="0"></iframe>
+    <!-- HERO -->
+    <section id="hero">
+        <div class="container hero-grid">
+            <div>
+                <span class="tag">Welcome, I am</span>
+                <h1>Baha Mabrouk</h1>
+                <p class="role mono"><span id="typed"></span><span class="cursor"></span></p>
+                <p class="loc"><i class="fas fa-map-marker-alt"></i> Tunisia</p>
+                <div class="cta">
+                    <a href="#projects" class="btn primary">View Projects</a>
+                    <a href="#contact" class="btn">Get in touch</a>
+                </div>
+                <div class="socials">
+                    <a href="https://www.facebook.com/Ba1haa/" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="https://www.kaggle.com/bahamabroukpers" target="_blank" rel="noopener" aria-label="Kaggle"><i class="fab fa-kaggle"></i></a>
+                    <a href="https://www.linkedin.com/in/baha-mabrouk-cmp/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://github.com/Baha-Mabrouk-ses" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                </div>
             </div>
-
-
-            <h2>Contact</h2>
-            <p><a href="mailto:mail:Mabrouk.Baha1@gmail.com">Mabrouk.Baha1@gmail .com</a></p>
+            <div class="avatar"><img src="Profile_img.jpeg" alt="Baha Mabrouk"></div>
         </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="reveal">
+        <div class="container">
+            <h2 class="sec-title"><small class="mono">01</small> About</h2>
+            <div class="card">
+                <p>I am a <strong>Lead AI Engineer</strong> specializing in computer vision and applied deep learning. I build AI systems that turn visual data into reliable, real-world products, from the first prototype through to production deployment.</p>
+                <p>My work sits between research, engineering and product: choosing the right models, designing efficient inference pipelines, and turning requirements into clear technical plans. I lead and mentor a team of AI engineers, and I care about solutions that are accurate, efficient and practical to maintain.</p>
+            </div>
+        </div>
+    </section>
+    <!-- EXPERIENCE -->
+    <section id="experience" class="reveal">
+        <div class="container">
+            <h2 class="sec-title"><small class="mono">02</small> Experience</h2>
+            <div class="timeline">
+
+                <div class="job card">
+                    <span class="dot"></span>
+                    <h3>Lead AI Engineer <span class="org">· MDI AI Detection</span></h3>
+                    <span class="date mono">Feb 2025 – Present · Promoted from Computer Vision / AI Engineer</span>
+                    <p>AI-powered video analytics platform.</p>
+                    <ul>
+                        <li>Lead and supervise three AI engineers: set priorities, assign features, review code and evaluate deliverables.</li>
+                        <li>Define technical architecture and specifications for AI features, translating product requirements into implementable plans.</li>
+                        <li>Design end-to-end AI workflows: model selection, training strategy, inference, temporal analysis, event generation and backend integration.</li>
+                        <li>Evaluate technical feasibility and set acceptance criteria for accuracy, speed and resource usage.</li>
+                        <li>Own the AI technical roadmap, prioritizing by commercial value, complexity and deployment constraints.</li>
+                        <li>Oversee a portfolio of computer vision capabilities including detection, tracking, safety and behavior analytics.</li>
+                        <li>Guide model deployment and optimization, and dataset development using manual, synthetic and foundation-model-assisted annotation.</li>
+                        <li>Oversaw a semantic-search workflow enabling natural-language retrieval across visual events.</li>
+                    </ul>
+                </div>
+
+                <div class="job card">
+                    <span class="dot"></span>
+                    <h3>Computer Vision / AI Engineer <span class="org">· MDI AI Detection</span></h3>
+                    <span class="date mono">Initial role</span>
+                    <ul>
+                        <li>Evaluated and benchmarked detection models with the team and selected the primary production detector.</li>
+                        <li>Fine-tuned detection models on real-world CCTV data, including low-light footage and challenging camera angles.</li>
+                        <li>Designed efficient multi-stream inference strategies and profiled models to remove performance bottlenecks.</li>
+                        <li>Contributed to a multi-camera production deployment, helping scale the platform to many concurrent video streams per machine.</li>
+                        <li>Contributed to lower latency, reduced resource usage and fewer false alarms.</li>
+                        <li>Designed an R&amp;D approach to event detection combining detection, tracking and temporal analysis.</li>
+                        <li>Prototyped a vision-language model workflow for automated event understanding and verification.</li>
+                    </ul>
+                </div>
+
+                <div class="job card">
+                    <span class="dot"></span>
+                    <h3>Data Scientist <span class="org">· DigimaCo</span></h3>
+                    <span class="date mono">2024 · Esports.tn, with Tunisie Telecom</span>
+                    <ul>
+                        <li>Analysed game statistics, player performance, mission completion and engagement data.</li>
+                        <li>Built data-processing pipelines, reports and dashboards to monitor platform metrics.</li>
+                        <li>Delivered data-driven recommendations for product decisions and player engagement.</li>
+                    </ul>
+                </div>
+
+                <div class="job card">
+                    <span class="dot"></span>
+                    <h3>Computer Vision Intern / Final-Year Project <span class="org">· Octomiro</span></h3>
+                    <span class="date mono">8 months · Industrial object-counting application</span>
+                    <ul>
+                        <li>Developed an industrial object-counting computer vision prototype.</li>
+                        <li>Used SAM and SAM 2 for semi-automated dataset annotation.</li>
+                        <li>Fine-tuned detection models and built a YOLO segmentation pipeline.</li>
+                    </ul>
+                </div>
+
+                <div class="job card">
+                    <span class="dot"></span>
+                    <h3>Machine Learning Research Intern <span class="org">· Crystal-Lab, GRIFT Group, ENSI</span></h3>
+                    <span class="date mono">3 months</span>
+                    <ul>
+                        <li>Supported research on Random Forest approaches for symptom-based diagnosis and prepared a final report.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LEADERSHIP -->
+    <section id="leadership" class="reveal">
+        <div class="container">
+            <h2 class="sec-title"><small class="mono">03</small> Leadership</h2>
+            <p class="lead-intro">Promoted from Computer Vision / AI Engineer to Lead AI Engineer, I combine hands-on technical depth with ownership of direction, delivery and the people building it.</p>
+
+            <div class="lead-grid">
+                <div class="card">
+                    <h4 class="mono">Leadership skills</h4>
+                    <ul class="lead-skills">
+                        <li><strong>Team leadership &amp; mentoring</strong><span>Setting priorities, assigning features and guiding engineers through implementation.</span></li>
+                        <li><strong>Technical architecture</strong><span>Turning product requirements into clear specifications and system designs.</span></li>
+                        <li><strong>Roadmap &amp; prioritization</strong><span>Balancing commercial value, complexity and deployment constraints.</span></li>
+                        <li><strong>Quality &amp; code review</strong><span>Reviewing code, supporting debugging and evaluating deliverables.</span></li>
+                        <li><strong>Decision-making</strong><span>Setting model-selection criteria, dataset requirements and acceptance criteria.</span></li>
+                        <li><strong>Cross-team collaboration</strong><span>Aligning the AI team with backend and integration engineers.</span></li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4 class="mono">What I have done as Lead</h4>
+                    <ul class="lead-done">
+                        <li>Lead and supervise a team of <strong>three AI engineers</strong>, distributing feature responsibilities and reviewing their work.</li>
+                        <li>Define the technical architecture and specifications for AI features across the platform.</li>
+                        <li>Own the AI team's technical roadmap and decide what gets built first.</li>
+                        <li>Set acceptance criteria for accuracy, speed and resource usage, and evaluate feasibility before commitment.</li>
+                        <li>Guide dataset development using manual collection, synthetic data and foundation-model-assisted annotation.</li>
+                        <li>Supervise model deployment and optimization carried out by the responsible engineers.</li>
+                        <li>Oversee delivery of detection, tracking, safety and behavior analytics, plus a natural-language semantic-search workflow.</li>
+                        <li>Coordinate AI development with backend and integration engineers so features fit the wider product.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- SKILLS -->
+    <section id="skills" class="reveal">
+        <div class="container">
+            <h2 class="sec-title"><small class="mono">04</small> Skills</h2>
+            <div class="skill-groups">
+                <div class="card"><h4 class="mono">Computer Vision &amp; Deep Learning</h4><div class="chips">
+                    <span class="chip">Python</span><span class="chip">PyTorch</span><span class="chip">YOLO</span><span class="chip">D-FINE</span><span class="chip">OpenCV</span><span class="chip">SAM / SAM 2</span><span class="chip">Detection</span><span class="chip">Segmentation</span><span class="chip">Fine-tuning</span></div></div>
+                <div class="card"><h4 class="mono">Tracking &amp; Temporal Analysis</h4><div class="chips">
+                    <span class="chip">ByteTrack</span><span class="chip">Kalman filtering</span><span class="chip">Trajectory analysis</span><span class="chip">Event verification</span></div></div>
+                <div class="card"><h4 class="mono">Vision-Language Models &amp; LLMs</h4><div class="chips">
+                    <span class="chip">Llama</span><span class="chip">OpenCLIP</span><span class="chip">Qwen</span><span class="chip">LLaVA</span><span class="chip">SmolVLM</span><span class="chip">Semantic search</span></div></div>
+                <div class="card"><h4 class="mono">Edge AI &amp; Optimization</h4><div class="chips">
+                    <span class="chip">NVIDIA RTX GPUs</span><span class="chip">Jetson (foundational)</span><span class="chip">TensorRT</span><span class="chip">ONNX</span><span class="chip">FP16</span><span class="chip">Model profiling</span><span class="chip">Multi-camera batching</span><span class="chip">GPU/VRAM tuning</span></div></div>
+                <div class="card"><h4 class="mono">AI Architecture &amp; Product</h4><div class="chips">
+                    <span class="chip">Inference architecture</span><span class="chip">Technical specs</span><span class="chip">Feasibility analysis</span><span class="chip">Roadmaps</span><span class="chip">Team leadership</span></div></div>
+                <div class="card"><h4 class="mono">Data Science</h4><div class="chips">
+                    <span class="chip">SQL</span><span class="chip">Pandas</span><span class="chip">NumPy</span><span class="chip">Scikit-learn</span><span class="chip">TensorFlow</span><span class="chip">Keras</span></div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- EDUCATION -->
+    <section id="education" class="reveal">
+        <div class="container">
+            <h2 class="sec-title"><small class="mono">05</small> Education</h2>
+            <div class="edu-grid">
+                <div class="card">
+                    <h3>Computer Engineering Degree</h3>
+                    <span class="date mono">SESAME University · 2024</span>
+                    <p>Specialization in Artificial Intelligence and Data Science. Final-year project: industrial object counting with computer vision, YOLO and SAM-based semi-automated annotation.</p>
+                </div>
+                <div class="card">
+                    <h3>IBM Data Science Professional Certificate</h3>
+                    <span class="date mono">IBM / Coursera</span>
+                    <h3 style="margin-top:20px">Languages</h3>
+                    <div class="chips" style="margin-top:10px">
+                        <span class="chip">Arabic · Native</span><span class="chip">French · Bilingual</span><span class="chip">English · C1</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- PROJECTS -->
+    <section id="projects" class="reveal">
+        <div class="container">
+            <h2 class="sec-title"><small class="mono">06</small> Projects</h2>
+            <div class="projects">
+                <a class="card project featured" onclick="openModal('aegis.html')">
+                    <span class="num mono">01 · FLAGSHIP</span>
+                    <h3>MDI Aegis: Complete Computer Vision Security System</h3>
+                    <p>A unified platform for live monitoring, detection, analytics and traffic analysis across many cameras. Explore every detection type running live, from people and vehicles to behavior and safety models.</p>
+                    <span class="open mono">Explore the platform &rarr;</span>
+                </a>
+                <a class="card project" href="https://github.com/Baha-Mabrouk-ses/raspi-label-printer" target="_blank" rel="noopener">
+                    <span class="num mono">02 · EDGE AI · OPEN SOURCE</span>
+                    <h3>Raspberry Pi Smart Label Printer</h3>
+                    <p>Print a shipping-label PDF from any computer and a YOLOv5 model finds the label, crops it, resizes it and sends it to the label printer. Runs on a Raspberry Pi in Docker.</p>
+                    <div class="tags-row"><span class="chip">YOLOv5</span><span class="chip">Python</span><span class="chip">Docker</span><span class="chip">CUPS</span></div>
+                    <span class="open mono">View on GitHub &rarr;</span>
+                </a>                <a class="card project" onclick="openModal('notebooks/Morphing of facial 3D mesh.pdf')">
+                    <span class="num mono">03 · RESEARCH</span>
+                    <h3>Morphing of facial 3D mesh</h3>
+                    <span class="open mono">Open document &rarr;</span>
+                </a>
+                <a class="card project" href="https://www.octomiro.ai/octoxact" target="_blank" rel="noopener">
+                    <span class="num mono">04 · COMPUTER VISION</span>
+                    <h3>OctoXact: Semantic General Counting</h3>
+                    <p>Automatic counting of products, pallets, drums and containers from a single photo, built on a segmentation model with foundation-model-assisted annotation.</p>
+                    <div class="tags-row"><span class="chip">YOLO</span><span class="chip">SAM / SAM 2</span><span class="chip">Segmentation</span></div>
+                    <span class="open mono">Visit OctoXact &rarr;</span>
+                </a>
+                <a class="card project" href="https://esports.tn/tournaments" target="_blank" rel="noopener">
+
+                    <span class="num mono">05 · DATA SCIENCE</span>
+                    <h3>Esports.tn: Platform Analytics</h3>
+                    <p>Data analysis for a Tunisian esports tournament platform built with Tunisie Telecom: player performance, engagement and dashboards that supported product decisions.</p>
+                    <span class="open mono">Visit esports.tn &rarr;</span>
+                </a>
+            </div>
+        </div>
+    </section>
+    <!-- CONTACT -->
+    <section id="contact" class="reveal">
+        <div class="container">
+            <h2>Let's build something <em>intelligent</em>.</h2>
+            <p>Open to collaborations, research and AI engineering opportunities.</p>
+            <a class="btn primary" href="mailto:Mabrouk.Baha1@gmail.com"><i class="fas fa-envelope"></i>&nbsp; Mabrouk.Baha1@gmail.com</a>
+        </div>
+    </section>
+
+    <footer>&copy; <span id="year"></span> Baha Mabrouk</footer>
+
+    <div id="myModal" class="modal">
+        <span class="exit-button" onclick="closeModal()">&times; Exit</span>
+        <iframe id="iframeEmbed" class="iframe-container" src="" frameborder="0"></iframe>
     </div>
 
-
     <script>
-        function openModal(htmlPath) {
-            var modal = document.getElementById("myModal");
-            var iframeEmbed = document.getElementById("iframeEmbed");
-            modal.style.display = "flex";
-            iframeEmbed.src = htmlPath;
+        function openModal(path) {
+            document.getElementById("myModal").style.display = "flex";
+            document.getElementById("iframeEmbed").src = path;
         }
-
         function closeModal() {
-            var modal = document.getElementById("myModal");
-            var iframeEmbed = document.getElementById("iframeEmbed");
-            modal.style.display = "none";
-            // Clear the iframe source to stop it from loading in the background
-            iframeEmbed.src = "";
+            document.getElementById("myModal").style.display = "none";
+            document.getElementById("iframeEmbed").src = "";
         }
+        document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal(); });
+        document.getElementById("year").textContent = new Date().getFullYear();
+
+        // Typing effect
+        const roles = ["Lead AI Engineer", "Computer Vision Engineer", "AI Solutions Architect", "Edge AI"];
+        const typed = document.getElementById("typed");
+        let r = 0, c = 0, del = false;
+        (function type() {
+            const w = roles[r];
+            typed.textContent = w.slice(0, c);
+            if (!del && c === w.length) { del = true; return setTimeout(type, 1400); }
+            if (del && c === 0) { del = false; r = (r + 1) % roles.length; }
+            c += del ? -1 : 1;
+            setTimeout(type, del ? 40 : 80);
+        })();
+
+        // Scroll reveal
+        const io = new IntersectionObserver(es => es.forEach(e => {
+            if (e.isIntersecting) { e.target.classList.add("show"); io.unobserve(e.target); }
+        }), { threshold: 0.12 });
+        document.querySelectorAll(".reveal").forEach(el => io.observe(el));
     </script>
 </body>
-
 </html>
+
+
+
+
+
+

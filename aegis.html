@@ -1,0 +1,1616 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MDI Aegis | Case Study</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            obsidian: '#0B0D10',
+            surface: '#14171D',
+            surfaceHover: '#1A1E26',
+            borderDark: '#1E232D',
+            accentBlue: '#38BDF8',
+            accentGreen: '#10B981',
+            accentAmber: '#F59E0B',
+            accentRed: '#EF4444',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #0B0D10;
+      color: #F3F4F6;
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* Custom subtle grid background for portfolio technical aesthetic */
+    .bg-grid-pattern {
+      background-size: 32px 32px;
+      background-image: 
+        linear-gradient(to right, rgba(30, 35, 45, 0.35) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(30, 35, 45, 0.35) 1px, transparent 1px);
+    }
+
+    /* Animated pulse for live edge nodes */
+    @keyframes flowDash {
+      to {
+        stroke-dashoffset: -24;
+      }
+    }
+    .animate-flow {
+      stroke-dasharray: 6 6;
+      animation: flowDash 1.2s linear infinite;
+    }
+
+    /* Custom range slider styling matching MDI AI UI */
+    input[type=range].mdi-slider {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 5px;
+      border-radius: 999px;
+      background: #272D38;
+      outline: none;
+    }
+    input[type=range].mdi-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background: #FFFFFF;
+      border: 2px solid #10B981;
+      cursor: pointer;
+      box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
+      transition: transform 0.15s ease;
+    }
+    input[type=range].mdi-slider::-webkit-slider-thumb:hover {
+      transform: scale(1.15);
+    }
+    input[type=range].mdi-slider:disabled::-webkit-slider-thumb {
+      border-color: #6B7280;
+      box-shadow: none;
+      cursor: not-allowed;
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0B0D10;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1E232D;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #333B4B;
+    }
+  </style>
+</head>
+<body class="bg-grid-pattern min-h-screen antialiased selection:bg-sky-500/30 selection:text-sky-200">
+
+  <!-- TOP PORTFOLIO HERO HEADER -->
+  <header class="border-b border-[#1E232D] bg-[#0B0D10]/90 backdrop-blur-md sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+        
+        <!-- Brand & Project Title -->
+        <div class="flex items-start sm:items-center gap-3.5">
+          <!-- Custom SVG Shield Logo inspired by MDI AI Detection -->
+          <div class="w-11 h-11 rounded-xl bg-[#14171D] border border-[#262C38] flex items-center justify-center shadow-lg shadow-sky-500/5 shrink-0">
+            <svg class="w-6 h-6 text-sky-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M12 2L3 7v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-9-5z" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M12 8l-4 7h8l-4-7z" class="text-emerald-400" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="12" cy="12.5" r="1" fill="currentColor"/>
+            </svg>
+          </div>
+          <div>
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="text-[11px] font-mono uppercase tracking-widest text-sky-400 bg-sky-500/10 border border-sky-500/20 px-2 py-0.5 rounded-md">
+                Product & Systems Architecture Case Study
+              </span>
+              <span class="text-xs font-mono text-gray-500">Edge/Cloud AI</span>
+            </div>
+            <h1 class="text-lg sm:text-xl font-bold text-white tracking-tight mt-1">
+              MDI AI — Aegis Intelligent Surveillance Platform
+            </h1>
+          </div>
+        </div>
+
+        <a href="index.html" onclick="if(window.parent!==window){parent.closeModal();return false;}" class="text-xs font-mono text-gray-400 hover:text-white border border-[#1E232D] rounded-lg px-3 py-2 self-start lg:self-center">&larr; Back to portfolio</a>
+        <!-- View Mode Navigation Tabs -->
+        <nav class="flex items-center bg-[#14171D] p-1 rounded-xl border border-[#1E232D] overflow-x-auto">
+          <button onclick="switchTab('library')" id="tab-library" class="tab-btn px-3.5 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all whitespace-nowrap text-gray-400 hover:text-gray-200">
+            Detection Library
+          </button>
+          <button onclick="switchTab('overview')" id="tab-overview" class="tab-btn px-3.5 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all whitespace-nowrap bg-[#1E232D] text-white shadow-sm">
+            System Overview & Architecture
+          </button>
+          <button onclick="switchTab('explorer')" id="tab-explorer" class="tab-btn px-3.5 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all whitespace-nowrap text-gray-400 hover:text-gray-200">
+            Interactive Feature Explorer
+          </button>
+          <button onclick="switchTab('mockup')" id="tab-mockup" class="tab-btn px-3.5 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all whitespace-nowrap text-gray-400 hover:text-gray-200">
+            Live UI Mockup & Metrics
+          </button>
+        </nav>
+      </div>
+
+      <!-- Stack & Role Badges -->
+      <div class="flex flex-wrap items-center justify-between gap-3 mt-3 pt-3 border-t border-[#1E232D]/70 text-xs">
+        <div class="flex flex-wrap items-center gap-2">
+          <span class="text-gray-400 font-medium mr-1">Core Capabilities:</span>
+          <span class="px-2.5 py-1 rounded-md bg-[#14171D] border border-[#1E232D] text-gray-300 flex items-center gap-1.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Computer Vision & Multi-Model Inference
+          </span>
+          <span class="px-2.5 py-1 rounded-md bg-[#14171D] border border-[#1E232D] text-gray-300 flex items-center gap-1.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-sky-400"></span> Automated License Plate Recognition (ALPR)
+          </span>
+          <span class="px-2.5 py-1 rounded-md bg-[#14171D] border border-[#1E232D] text-gray-300 flex items-center gap-1.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span> Real-Time Edge/GPU Telemetry
+          </span>
+          <span class="px-2.5 py-1 rounded-md bg-[#14171D] border border-[#1E232D] text-gray-300 flex items-center gap-1.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-purple-400"></span> Spatial Heatmaps & Forensic Search
+          </span>
+        </div>
+        <div class="hidden md:flex items-center gap-2 font-mono text-[11px] text-gray-400">
+          <span class="inline-flex items-center gap-1.5 text-emerald-400">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            DEMO SITE (7/7 ONLINE)
+          </span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN PORTFOLIO CONTAINER -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">
+
+    <!-- ===================================================================== -->
+    <!-- DETECTION LIBRARY: every detection type, animated                      -->
+    <!-- ===================================================================== -->
+    <section id="view-library" class="hidden space-y-8">
+      <div class="bg-[#14171D] border border-[#1E232D] rounded-2xl p-6 sm:p-8">
+        <div class="pb-6 border-b border-[#1E232D]">
+          <span class="text-xs font-mono text-emerald-400 uppercase tracking-wider">Detection Library</span>
+          <h2 class="text-xl sm:text-2xl font-bold text-white mt-0.5">Every Detection Type in Aegis, Running Live</h2>
+          <p class="text-xs sm:text-sm text-gray-400 mt-1">Each capability is its own model that can be enabled per camera. Select one to watch a simulated scene with its detections, tracks and alerts.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mt-6">
+          <div class="lg:col-span-5 space-y-5" id="lib-list"></div>
+
+          <div class="lg:col-span-7">
+            <div class="bg-[#0B0D10] border border-[#1E232D] rounded-2xl overflow-hidden lg:sticky lg:top-44">
+              <div class="relative">
+                <canvas id="lib-canvas" width="640" height="360" class="w-full h-auto block"></canvas>
+                <div class="absolute top-3 left-3 flex items-center gap-2 text-[10px] font-mono bg-black/60 px-2 py-1 rounded">
+                  <span class="w-2 h-2 rounded-full bg-rose-500 animate-pulse"></span>
+                  <span class="text-gray-200">LIVE · SIMULATED SCENE</span>
+                </div>
+                <div id="lib-alert" class="absolute top-3 right-3 hidden text-[11px] font-mono font-bold px-2.5 py-1 rounded bg-rose-500 text-white">ALERT</div>
+              </div>
+              <div class="p-5 border-t border-[#1E232D] space-y-2">
+                <div class="flex flex-wrap items-center gap-2">
+                  <span id="lib-group" class="px-2 py-0.5 rounded text-[11px] font-mono bg-sky-500/15 text-sky-400 border border-sky-500/30"></span>
+                  <span id="lib-status" class="px-2 py-0.5 rounded text-[11px] font-mono bg-[#14171D] text-gray-400 border border-[#1E232D]"></span>
+                </div>
+                <h3 id="lib-title" class="text-lg font-bold text-white"></h3>
+                <p id="lib-desc" class="text-sm text-gray-400 leading-relaxed"></p>
+                <div id="lib-flow" class="flex flex-wrap items-center gap-1.5 pt-1 text-[11px] font-mono"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- SECTION 1: SYSTEM OVERVIEW & VISUAL ARCHITECTURE ILLUSTRATION          -->
+    <!-- ===================================================================== -->
+    <section id="view-overview" class="hidden space-y-8">
+      
+      <!-- Executive Summary Banner -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+        <div class="lg:col-span-8 bg-[#14171D] border border-[#1E232D] rounded-2xl p-6 sm:p-7 flex flex-col justify-between">
+          <div>
+            <div class="inline-flex items-center gap-2 text-xs font-mono text-emerald-400 mb-2">
+              <span>01 // ARCHITECTURE & SYSTEM DESIGN</span>
+            </div>
+            <h2 class="text-xl sm:text-2xl font-bold text-white mb-3">
+              Unified Edge-to-Cloud Video Intelligence & Command Center
+            </h2>
+            <p class="text-sm sm:text-base text-gray-400 leading-relaxed">
+              <strong class="text-gray-200">MDI AI Detection (Aegis)</strong> transforms passive multi-camera RTSP/PTZ video networks into an active, searchable security intelligence engine. Designed for zero-latency situational awareness, the platform pairs hardware-accelerated GPU inference with granular per-camera confidence tuning, automated license plate OCR, and real-time edge node health monitoring.
+            </p>
+          </div>
+          
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-6 pt-5 border-t border-[#1E232D]">
+            <div class="bg-[#0B0D10] border border-[#1E232D] rounded-xl p-3">
+              <div class="text-xs text-gray-500">Processing</div>
+              <div class="text-lg font-mono font-bold text-emerald-400 mt-0.5">Real-time</div>
+              <div class="text-[11px] text-gray-400">GPU-accelerated inference</div>
+            </div>
+            <div class="bg-[#0B0D10] border border-[#1E232D] rounded-xl p-3">
+              <div class="text-xs text-gray-500">Detection Types</div>
+              <div class="text-lg font-mono font-bold text-sky-400 mt-0.5">Modular</div>
+              <div class="text-[11px] text-gray-400">Safety, security & traffic</div>
+            </div>
+            <div class="bg-[#0B0D10] border border-[#1E232D] rounded-xl p-3">
+              <div class="text-xs text-gray-500">Plate Reading</div>
+              <div class="text-lg font-mono font-bold text-amber-400 mt-0.5">ALPR</div>
+              <div class="text-[11px] text-gray-400">OCR + access registry</div>
+            </div>
+            <div class="bg-[#0B0D10] border border-[#1E232D] rounded-xl p-3">
+              <div class="text-xs text-gray-500">Scale</div>
+              <div class="text-lg font-mono font-bold text-white mt-0.5">Multi-camera</div>
+              <div class="text-[11px] text-emerald-400">Many streams per node</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Core Engineering Pillars Card -->
+        <div class="lg:col-span-4 bg-[#14171D] border border-[#1E232D] rounded-2xl p-6 flex flex-col justify-between">
+          <div>
+            <h3 class="text-sm font-semibold uppercase tracking-wider text-gray-300 mb-4 flex items-center gap-2">
+              <svg class="w-4 h-4 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+              4 Functional Pillars
+            </h3>
+            <ul class="space-y-3 text-xs sm:text-sm">
+              <li class="p-2.5 rounded-xl bg-[#0B0D10] border border-[#1E232D] flex items-start gap-2.5">
+                <span class="px-1.5 py-0.5 rounded bg-sky-500/15 text-sky-400 font-mono text-xs font-bold">01</span>
+                <div>
+                  <div class="font-semibold text-gray-200">Multi-Stream Live Matrix & PTZ</div>
+                  <div class="text-gray-400 text-xs mt-0.5">Dynamic camera grid, digital zoom (1.0x+), and live AI bounding badges.</div>
+                </div>
+              </li>
+              <li class="p-2.5 rounded-xl bg-[#0B0D10] border border-[#1E232D] flex items-start gap-2.5">
+                <span class="px-1.5 py-0.5 rounded bg-emerald-500/15 text-emerald-400 font-mono text-xs font-bold">02</span>
+                <div>
+                  <div class="font-semibold text-gray-200">Per-Camera AI Confidence Engine</div>
+                  <div class="text-gray-400 text-xs mt-0.5">Independent model toggles & threshold sliders to eliminate false positives.</div>
+                </div>
+              </li>
+              <li class="p-2.5 rounded-xl bg-[#0B0D10] border border-[#1E232D] flex items-start gap-2.5">
+                <span class="px-1.5 py-0.5 rounded bg-amber-500/15 text-amber-400 font-mono text-xs font-bold">03</span>
+                <div>
+                  <div class="font-semibold text-gray-200">ALPR & Whitelist/Blacklist Registry</div>
+                  <div class="text-gray-400 text-xs mt-0.5">Automated plate cropping, OCR indexing, and instant access control tagging.</div>
+                </div>
+              </li>
+              <li class="p-2.5 rounded-xl bg-[#0B0D10] border border-[#1E232D] flex items-start gap-2.5">
+                <span class="px-1.5 py-0.5 rounded bg-purple-500/15 text-purple-400 font-mono text-xs font-bold">04</span>
+                <div>
+                  <div class="font-semibold text-gray-200">Telemetry, Heatmaps & Forensics</div>
+                  <div class="text-gray-400 text-xs mt-0.5">24h event velocity curves, spatial activity heatmaps, and GPU/CPU metrics.</div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- INTERACTIVE SYSTEM ARCHITECTURE FLOW DIAGRAM -->
+      <div class="bg-[#14171D] border border-[#1E232D] rounded-2xl p-6 sm:p-8 shadow-xl">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+          <div>
+            <span class="text-xs font-mono text-sky-400 uppercase tracking-wider">Interactive Data Pipeline Illustration</span>
+            <h3 class="text-lg sm:text-xl font-bold text-white mt-0.5">End-to-End Computer Vision & Event Processing Architecture</h3>
+            <p class="text-xs sm:text-sm text-gray-400 mt-1">Click any architectural stage below to inspect its technical implementation, data payload, and UI mapping.</p>
+          </div>
+          <div class="flex items-center gap-2 text-xs font-mono bg-[#0B0D10] px-3 py-1.5 rounded-lg border border-[#1E232D] text-gray-400 self-start">
+            <span class="w-2 h-2 rounded-full bg-sky-400 animate-ping"></span>
+            <span>Interactive Node Inspector</span>
+          </div>
+        </div>
+
+        <!-- Visual Pipeline Nodes Grid with SVG Connectors -->
+        <div class="relative">
+          <!-- Desktop SVG Flow Connector Line -->
+          <svg class="hidden lg:block absolute top-1/2 left-0 w-full h-12 -translate-y-1/2 pointer-events-none z-0" preserveAspectRatio="none">
+            <line x1="10%" y1="24" x2="90%" y2="24" stroke="#1E232D" stroke-width="3" />
+            <line x1="10%" y1="24" x2="90%" y2="24" stroke="#38BDF8" stroke-width="2" class="animate-flow" />
+          </svg>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 relative z-10">
+            
+            <!-- Node 1: Camera Feeds -->
+            <button onclick="selectArchNode(0)" id="arch-node-0" class="arch-node text-left p-4 rounded-xl bg-[#0B0D10] border-2 border-sky-500 shadow-lg shadow-sky-500/10 transition-all hover:-translate-y-1">
+              <div class="flex items-center justify-between mb-3">
+                <span class="w-8 h-8 rounded-lg bg-sky-500/15 text-sky-400 flex items-center justify-center">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                </span>
+                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-[#14171D] text-gray-400 border border-[#1E232D]">STAGE 01</span>
+              </div>
+              <h4 class="font-semibold text-white text-sm">RTSP / PTZ Ingestion</h4>
+              <p class="text-xs text-gray-400 mt-1">Multi-stream decoding (Camera 01, Camera 04, Camera 06)</p>
+              <div class="mt-3 pt-2 border-t border-[#1E232D] flex items-center justify-between text-[11px] font-mono text-emerald-400">
+                <span>0.0ms Latency</span>
+                <span>7 Streams</span>
+              </div>
+            </button>
+
+            <!-- Node 2: Edge/GPU Inference -->
+            <button onclick="selectArchNode(1)" id="arch-node-1" class="arch-node text-left p-4 rounded-xl bg-[#0B0D10] border border-[#1E232D] hover:border-gray-600 transition-all hover:-translate-y-1">
+              <div class="flex items-center justify-between mb-3">
+                <span class="w-8 h-8 rounded-lg bg-emerald-500/15 text-emerald-400 flex items-center justify-center">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"/></svg>
+                </span>
+                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-[#14171D] text-gray-400 border border-[#1E232D]">STAGE 02</span>
+              </div>
+              <h4 class="font-semibold text-white text-sm">GPU Vision Engine</h4>
+              <p class="text-xs text-gray-400 mt-1">Parallel neural inference for Human, Vehicle, PPE & Hazard models</p>
+              <div class="mt-3 pt-2 border-t border-[#1E232D] flex items-center justify-between text-[11px] font-mono text-sky-400">
+                <span>GPU accelerated</span>
+                <span>Parallel</span>
+              </div>
+            </button>
+
+            <!-- Node 3: Confidence Threshold Filter -->
+            <button onclick="selectArchNode(2)" id="arch-node-2" class="arch-node text-left p-4 rounded-xl bg-[#0B0D10] border border-[#1E232D] hover:border-gray-600 transition-all hover:-translate-y-1">
+              <div class="flex items-center justify-between mb-3">
+                <span class="w-8 h-8 rounded-lg bg-amber-500/15 text-amber-400 flex items-center justify-center">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>
+                </span>
+                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-[#14171D] text-gray-400 border border-[#1E232D]">STAGE 03</span>
+              </div>
+              <h4 class="font-semibold text-white text-sm">Confidence Gatekeeper</h4>
+              <p class="text-xs text-gray-400 mt-1">Per-camera threshold sliders filtering borderline detections</p>
+              <div class="mt-3 pt-2 border-t border-[#1E232D] flex items-center justify-between text-[11px] font-mono text-amber-400">
+                <span>Dynamic Cutoff</span>
+                <span>Low → High</span>
+              </div>
+            </button>
+
+            <!-- Node 4: ALPR & Event Pipeline -->
+            <button onclick="selectArchNode(3)" id="arch-node-3" class="arch-node text-left p-4 rounded-xl bg-[#0B0D10] border border-[#1E232D] hover:border-gray-600 transition-all hover:-translate-y-1">
+              <div class="flex items-center justify-between mb-3">
+                <span class="w-8 h-8 rounded-lg bg-purple-500/15 text-purple-400 flex items-center justify-center">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"/></svg>
+                </span>
+                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-[#14171D] text-gray-400 border border-[#1E232D]">STAGE 04</span>
+              </div>
+              <h4 class="font-semibold text-white text-sm">ALPR & Registry Match</h4>
+              <p class="text-xs text-gray-400 mt-1">OCR plate extraction matched against Known / Blacklisted lists</p>
+              <div class="mt-3 pt-2 border-t border-[#1E232D] flex items-center justify-between text-[11px] font-mono text-purple-400">
+                <span>OCR Crop</span>
+                <span>SQL/Redis</span>
+              </div>
+            </button>
+
+            <!-- Node 5: Command Dashboard -->
+            <button onclick="selectArchNode(4)" id="arch-node-4" class="arch-node text-left p-4 rounded-xl bg-[#0B0D10] border border-[#1E232D] hover:border-gray-600 transition-all hover:-translate-y-1">
+              <div class="flex items-center justify-between mb-3">
+                <span class="w-8 h-8 rounded-lg bg-rose-500/15 text-rose-400 flex items-center justify-center">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                </span>
+                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-[#14171D] text-gray-400 border border-[#1E232D]">STAGE 05</span>
+              </div>
+              <h4 class="font-semibold text-white text-sm">Aegis Command UI</h4>
+              <p class="text-xs text-gray-400 mt-1">WebSockets push alerts, 24h analytics, heatmaps & forensic search</p>
+              <div class="mt-3 pt-2 border-t border-[#1E232D] flex items-center justify-between text-[11px] font-mono text-rose-400">
+                <span>Real-Time UI</span>
+                <span>285.8 GB Log</span>
+              </div>
+            </button>
+
+          </div>
+        </div>
+
+        <!-- Selected Architecture Node Deep-Dive Panel -->
+        <div id="arch-detail-panel" class="mt-6 p-5 rounded-xl bg-[#0B0D10] border border-[#1E232D] grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+          <div class="lg:col-span-7 space-y-2">
+            <div class="flex items-center gap-2">
+              <span id="arch-detail-badge" class="px-2 py-0.5 rounded text-[11px] font-mono bg-sky-500/15 text-sky-400 border border-sky-500/30">STAGE 01 // INGESTION LAYER</span>
+              <span id="arch-detail-source" class="text-xs text-gray-500 font-mono">Ref: Live View & Cameras Module</span>
+            </div>
+            <h4 id="arch-detail-title" class="text-lg font-bold text-white">Multi-Stream RTSP & PTZ Camera Ingestion</h4>
+            <p id="arch-detail-desc" class="text-sm text-gray-400 leading-relaxed">
+              Connects heterogeneous IP cameras (Fixed Bullet, Dome, LPR-dedicated, and PTZ units like Camera 01) with sub-second frame buffering. Displays real-time stream health (Online 0.0ms) and supports dynamic multi-grid layout assignment with digital zoom up to 4.0x.
+            </p>
+          </div>
+          <div class="lg:col-span-5 bg-[#14171D] border border-[#1E232D] rounded-xl p-4 font-mono text-xs">
+            <div class="text-gray-500 mb-2 flex items-center justify-between">
+              <span>// TELEMETRY & PAYLOAD SPECIFICATION</span>
+              <span class="text-emerald-400">ACTIVE</span>
+            </div>
+            <pre id="arch-detail-code" class="text-sky-300 overflow-x-auto leading-relaxed">{
+  "cluster": "demo-site",
+  "active_streams": ["Camera 01", "Camera 04", "Camera 05"],
+  "transport": "WebRTC / Low-Latency RTSP",
+  "health_check": { "status": "ONLINE", "ping_ms": 0.0 }
+}</pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4 SCREENSHOT-BASED UX & ENGINEERING BREAKDOWN CARDS -->
+      <div class="space-y-4">
+        <div class="flex items-center justify-between">
+          <div>
+            <span class="text-xs font-mono text-emerald-400 uppercase tracking-wider">02 // PRODUCT CAPABILITIES MATRIX</span>
+            <h3 class="text-lg sm:text-xl font-bold text-white mt-0.5">Core Functional Modules & UX Architecture</h3>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          
+          <!-- Module 1: Multi-Stream Live View -->
+          <div class="bg-[#14171D] border border-[#1E232D] rounded-2xl p-6 hover:border-sky-500/40 transition-all flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <span class="px-2.5 py-1 rounded-lg bg-sky-500/10 border border-sky-500/20 text-sky-400 font-mono text-xs">MODULE 01 • LIVE VIEW</span>
+                <span class="text-xs font-mono text-gray-500">/site/live</span>
+              </div>
+              <h4 class="text-lg font-bold text-white mb-2">Multi-Stream Matrix & PTZ Digital Control</h4>
+              <p class="text-sm text-gray-400 leading-relaxed mb-4">
+                Operator-centric video wall supporting asynchronous camera feeds (<code class="text-gray-200 bg-[#0B0D10] px-1.5 py-0.5 rounded">Camera 01</code>, <code class="text-gray-200 bg-[#0B0D10] px-1.5 py-0.5 rounded">Camera 04</code>, <code class="text-gray-200 bg-[#0B0D10] px-1.5 py-0.5 rounded">Camera 05</code>) with instant full-screen toggle, per-tile digital zoom sliders (<code class="text-emerald-400">1.0x</code>), active model status icons, and empty slot hot-swapping (<code class="text-gray-200">+ Select Camera</code>).
+              </p>
+            </div>
+            <!-- Mini UI Schematic Illustration -->
+            <div class="bg-[#0B0D10] border border-[#1E232D] rounded-xl p-3">
+              <div class="grid grid-cols-2 gap-2 h-28">
+                <div class="rounded-lg bg-[#14171D] border border-[#262C38] p-2 flex flex-col justify-between relative overflow-hidden">
+                  <div class="flex items-center justify-between text-[10px] font-mono">
+                    <span class="text-white bg-black/60 px-1.5 py-0.5 rounded">Camera 01</span>
+                    <span class="flex gap-1">
+                      <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                      <span class="w-2 h-2 rounded-full bg-sky-400"></span>
+                    </span>
+                  </div>
+                  <div class="flex items-center justify-between text-[10px] font-mono text-gray-400">
+                    <span>Zoom: 1.0x</span>
+                    <span class="text-sky-400">[Full]</span>
+                  </div>
+                </div>
+                <div class="grid grid-rows-2 gap-2">
+                  <div class="rounded-lg bg-[#14171D] border border-[#262C38] px-2 py-1 flex items-center justify-between text-[10px] font-mono">
+                    <span class="text-gray-300">Camera 04</span>
+                    <span class="text-emerald-400">● AI ON</span>
+                  </div>
+                  <div class="rounded-lg bg-[#14171D] border border-dashed border-[#2E3646] px-2 py-1 flex items-center justify-center text-[10px] font-mono text-gray-500">
+                    + Select Camera
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Module 2: AI Detection Settings -->
+          <div class="bg-[#14171D] border border-[#1E232D] rounded-2xl p-6 hover:border-emerald-500/40 transition-all flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <span class="px-2.5 py-1 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 font-mono text-xs">MODULE 02 • DETECTION ENGINE</span>
+                <span class="text-xs font-mono text-gray-500">/site/cameras</span>
+              </div>
+              <h4 class="text-lg font-bold text-white mb-2">Granular AI Model & Confidence Tuning</h4>
+              <p class="text-sm text-gray-400 leading-relaxed mb-4">
+                Allows security engineers to toggle individual neural detectors per camera and calibrate sensitivity thresholds (Low → High) to balance recall against false alerts. Supports 3 core active models plus 9 modular enterprise safety & threat detectors.
+              </p>
+            </div>
+            <!-- Tags Illustration -->
+            <div class="bg-[#0B0D10] border border-[#1E232D] rounded-xl p-3 space-y-2">
+              <div class="flex flex-wrap gap-1.5 text-[11px] font-mono">
+                <span class="px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">✓ Human Detection</span>
+                <span class="px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">✓ Vehicle Detection</span>
+                <span class="px-2 py-0.5 rounded bg-sky-500/15 text-sky-300 border border-sky-500/30">✓ License Plate</span>
+              </div>
+              <div class="flex flex-wrap gap-1.5 text-[10px] text-gray-400">
+                <span class="px-2 py-0.5 rounded bg-[#14171D] border border-[#1E232D]">Gun Detection</span>
+                <span class="px-2 py-0.5 rounded bg-[#14171D] border border-[#1E232D]">Fire & Smoke</span>
+                <span class="px-2 py-0.5 rounded bg-[#14171D] border border-[#1E232D]">Slips & Fall</span>
+                <span class="px-2 py-0.5 rounded bg-[#14171D] border border-[#1E232D]">Hard Hats & Vests</span>
+                <span class="px-2 py-0.5 rounded bg-[#14171D] border border-[#1E232D]">Crash</span>
+                <span class="px-2 py-0.5 rounded bg-[#14171D] border border-[#1E232D]">Face</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Module 3: ALPR & Access Lists -->
+          <div class="bg-[#14171D] border border-[#1E232D] rounded-2xl p-6 hover:border-amber-500/40 transition-all flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <span class="px-2.5 py-1 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-400 font-mono text-xs">MODULE 03 • ALPR & REGISTRY</span>
+                <span class="text-xs font-mono text-gray-500">/site/event-license</span>
+              </div>
+              <h4 class="text-lg font-bold text-white mb-2">Automated License Plate Recognition (ALPR)</h4>
+              <p class="text-sm text-gray-400 leading-relaxed mb-4">
+                Captures high-resolution vehicle & license plate crops with optical character recognition (<code class="text-amber-300">KLM4821</code>, <code class="text-amber-300">RTV9035</code>, <code class="text-amber-300">HNP2764</code>). Operators filter streams by <span class="text-gray-200">All / Unknown / Known / Blacklisted</span> and promote plates to Whitelist or Blacklist registries in one click.
+              </p>
+            </div>
+            <!-- Plate Card Schematic -->
+            <div class="bg-[#0B0D10] border border-[#1E232D] rounded-xl p-3 flex items-center justify-between gap-3">
+              <div class="flex items-center gap-3">
+                <div class="px-3 py-1.5 rounded bg-[#14171D] border border-[#2C3444] font-mono font-bold text-sm text-white tracking-wider">
+                  KLM4821
+                </div>
+                <div class="text-xs">
+                  <div class="text-gray-300 font-medium">Camera 02 • Unknown</div>
+                  <div class="text-[11px] text-gray-500">Captured 93.7% conf</div>
+                </div>
+              </div>
+              <div class="flex items-center gap-2 text-[10px] font-mono font-semibold">
+                <span class="px-2 py-1 rounded bg-sky-500/15 text-sky-400 border border-sky-500/30">WHITELIST</span>
+                <span class="px-2 py-1 rounded bg-rose-500/15 text-rose-400 border border-rose-500/30">BLACKLIST</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Module 4: Command Telemetry & Spatial Analytics -->
+          <div class="bg-[#14171D] border border-[#1E232D] rounded-2xl p-6 hover:border-purple-500/40 transition-all flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <span class="px-2.5 py-1 rounded-lg bg-purple-500/10 border border-purple-500/20 text-purple-400 font-mono text-xs">MODULE 04 • COMMAND & TELEMETRY</span>
+                <span class="text-xs font-mono text-gray-500">/site</span>
+              </div>
+              <h4 class="text-lg font-bold text-white mb-2">Fleet Health, Event Analytics & Edge Telemetry</h4>
+              <p class="text-sm text-gray-400 leading-relaxed mb-4">
+                Consolidates camera online status, 24-hour hourly event distribution curves, top event-generating cameras, spatial activity heatmaps, and real-time host server telemetry (CPU, GPU VRAM, GPU Core Temp, RAM, and NVMe Storage).
+              </p>
+            </div>
+            <!-- Mini Telemetry Strip -->
+            <div class="bg-[#0B0D10] border border-[#1E232D] rounded-xl p-3 grid grid-cols-4 gap-2 text-center font-mono">
+              <div>
+                <div class="text-[10px] text-gray-500">CPU</div>
+                <div class="text-xs font-bold text-white">49.4%</div>
+              </div>
+              <div>
+                <div class="text-[10px] text-gray-500">GPU MEM</div>
+                <div class="text-xs font-bold text-sky-400">43.2%</div>
+              </div>
+              <div>
+                <div class="text-[10px] text-gray-500">GPU TEMP</div>
+                <div class="text-xs font-bold text-emerald-400">54°C</div>
+              </div>
+              <div>
+                <div class="text-[10px] text-gray-500">STORAGE</div>
+                <div class="text-xs font-bold text-amber-400">285.8GB</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- SECTION 2: INTERACTIVE FEATURE EXPLORER (AI CONFIGURATOR + ALPR)      -->
+    <!-- ===================================================================== -->
+    <section id="view-explorer" class="hidden space-y-8">
+      
+      <div class="bg-[#14171D] border border-[#1E232D] rounded-2xl p-6 sm:p-8">
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-6 border-b border-[#1E232D]">
+          <div>
+            <span class="text-xs font-mono text-emerald-400 uppercase tracking-wider">Interactive Product Sandbox</span>
+            <h2 class="text-xl sm:text-2xl font-bold text-white mt-0.5">AI Detection Configurator & Alert Threshold Simulator</h2>
+            <p class="text-xs sm:text-sm text-gray-400 mt-1">
+              Replicated from the <strong class="text-gray-200">Edit Camera → Detection Settings</strong> modal. Toggle AI detectors and drag confidence sliders (1–10) to observe how real-time inference events are filtered.
+            </p>
+          </div>
+          <div class="flex items-center gap-2 shrink-0">
+            <button onclick="setAllModels(true)" class="px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-[#0B0D10] hover:bg-[#1E232D] text-sky-400 border border-sky-500/30 transition">
+              ENABLE ALL
+            </button>
+            <button onclick="setAllModels(false)" class="px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-[#0B0D10] hover:bg-[#1E232D] text-gray-400 border border-[#1E232D] transition">
+              DISABLE ALL
+            </button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mt-6">
+          
+          <!-- Left: Interactive Detection Settings Controls (Screenshot 1 Recreation) -->
+          <div class="lg:col-span-7 space-y-5">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="active-models-container">
+              <!-- Populated dynamically via JS -->
+            </div>
+
+            <!-- Enterprise / Licensed Expansion Modules (Screenshot 1 Bottom Section) -->
+            <div class="pt-4 border-t border-[#1E232D]">
+              <div class="flex items-center gap-2 text-xs text-amber-400 bg-amber-500/10 border border-amber-500/20 px-3 py-2 rounded-xl mb-3">
+                <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                <span>Enterprise Add-On Neural Modules (Click any module to preview sandbox simulation)</span>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5" id="addon-models-container">
+                <!-- Populated dynamically via JS -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Real-Time Simulated Inference Feed Output -->
+          <div class="lg:col-span-5 bg-[#0B0D10] border border-[#1E232D] rounded-2xl p-5 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between pb-3 mb-4 border-b border-[#1E232D]">
+                <div>
+                  <h3 class="text-sm font-bold text-white">Live Inference Filter Output</h3>
+                  <p class="text-[11px] text-gray-500">Camera: <span class="text-gray-300 font-mono">Camera 01</span> • Threshold Gate Active</p>
+                </div>
+                <span id="filtered-count-badge" class="px-2.5 py-1 rounded-full text-xs font-mono bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
+                  6 / 8 Passed
+                </span>
+              </div>
+
+              <!-- Event Stream List -->
+              <div id="simulated-events-list" class="space-y-2.5 max-h-[400px] overflow-y-auto pr-1">
+                <!-- Dynamically rendered events based on sliders & toggles -->
+              </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-[#1E232D] text-[11px] text-gray-500 flex items-center justify-between">
+              <span>Higher threshold = fewer false positives</span>
+              <span class="font-mono text-sky-400">Aegis Filter Engine</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- INTERACTIVE ALPR & REGISTRY EXPLORER (Screenshot 3 Recreation) -->
+      <div class="bg-[#14171D] border border-[#1E232D] rounded-2xl p-6 sm:p-8">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+          <div>
+            <span class="text-xs font-mono text-amber-400 uppercase tracking-wider">Automated License Plate Recognition</span>
+            <h3 class="text-lg sm:text-xl font-bold text-white mt-0.5">ALPR Event Stream & Access Control Registry</h3>
+            <p class="text-xs sm:text-sm text-gray-400 mt-1">Filter captured plates by classification status or click <strong class="text-sky-400">WHITELIST</strong> / <strong class="text-rose-400">BLACKLIST</strong> to update registry state in real time.</p>
+          </div>
+
+          <!-- Filter Pills matching Screenshot 3 -->
+          <div class="flex flex-wrap items-center gap-2">
+            <button onclick="filterPlates('All')" id="plate-filter-All" class="plate-filter-btn px-3 py-1.5 rounded-lg text-xs font-medium bg-amber-500 text-black font-semibold transition">All</button>
+            <button onclick="filterPlates('Unknown')" id="plate-filter-Unknown" class="plate-filter-btn px-3 py-1.5 rounded-lg text-xs font-medium bg-[#0B0D10] text-gray-300 border border-[#1E232D] hover:border-gray-600 transition">Unknown</button>
+            <button onclick="filterPlates('Known')" id="plate-filter-Known" class="plate-filter-btn px-3 py-1.5 rounded-lg text-xs font-medium bg-[#0B0D10] text-gray-300 border border-[#1E232D] hover:border-gray-600 transition">Known</button>
+            <button onclick="filterPlates('Blacklisted')" id="plate-filter-Blacklisted" class="plate-filter-btn px-3 py-1.5 rounded-lg text-xs font-medium bg-[#0B0D10] text-gray-300 border border-[#1E232D] hover:border-gray-600 transition">Blacklisted</button>
+          </div>
+        </div>
+
+        <div id="alpr-cards-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <!-- Populated dynamically via JS -->
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- SECTION 3: LIVE UI MOCKUP & TELEMETRY METRICS (Screenshot 2 & 4)      -->
+    <!-- ===================================================================== -->
+    <section id="view-mockup" class="hidden space-y-8">
+      
+      <!-- Top Row: Cameras Online Status + Top Cameras by Events -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        <!-- Cameras Fleet Card (Screenshot 2 Top Left) -->
+        <div class="lg:col-span-5 bg-[#14171D] border border-[#1E232D] rounded-2xl p-6">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-base font-bold text-white">Cameras</h3>
+            <span class="text-xs font-mono text-gray-500">Demo site</span>
+          </div>
+          
+          <!-- Status Summary Pills -->
+          <div class="grid grid-cols-3 gap-2.5 mb-4 font-mono text-xs">
+            <div class="bg-[#0B0D10] border border-[#1E232D] rounded-lg px-3 py-2 flex items-center justify-between">
+              <span class="text-gray-400">TOTAL</span>
+              <span class="font-bold text-sky-400">7</span>
+            </div>
+            <div class="bg-emerald-500/10 border border-emerald-500/25 rounded-lg px-3 py-2 flex items-center justify-between">
+              <span class="text-emerald-300">ONLINE</span>
+              <span class="font-bold text-emerald-400">7</span>
+            </div>
+            <div class="bg-rose-500/10 border border-rose-500/25 rounded-lg px-3 py-2 flex items-center justify-between">
+              <span class="text-rose-300">OFFLINE</span>
+              <span class="font-bold text-rose-400">0</span>
+            </div>
+          </div>
+
+          <!-- Camera Nodes Grid -->
+          <div class="grid grid-cols-2 gap-2.5 text-xs font-mono">
+            <div class="p-2.5 rounded-lg bg-[#0B0D10] border border-[#1E232D] flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+              <span class="text-gray-200">Camera 01</span>
+            </div>
+            <div class="p-2.5 rounded-lg bg-[#0B0D10] border border-[#1E232D] flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+              <span class="text-gray-200">Camera 06</span>
+            </div>
+            <div class="p-2.5 rounded-lg bg-[#0B0D10] border border-[#1E232D] flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+              <span class="text-gray-200">Camera 03</span>
+            </div>
+            <div class="p-2.5 rounded-lg bg-[#0B0D10] border border-[#1E232D] flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+              <span class="text-gray-200">Camera 04</span>
+            </div>
+            <div class="p-2.5 rounded-lg bg-[#0B0D10] border border-[#1E232D] flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+              <span class="text-gray-200">Camera 05</span>
+            </div>
+            <div class="p-2.5 rounded-lg bg-[#0B0D10] border border-[#1E232D] flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+              <span class="text-gray-200">Camera 02</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Top Camera by Events (Screenshot 2 Top Middle) -->
+        <div class="lg:col-span-7 bg-[#14171D] border border-[#1E232D] rounded-2xl p-6 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-1">
+              <h3 class="text-base font-bold text-white">Top Camera by Events</h3>
+              <span class="text-xs font-mono text-emerald-400">Last 24 hours</span>
+            </div>
+            <p class="text-xs text-gray-400 mb-5">Ranked by AI-verified vehicle & human detections</p>
+
+            <div class="space-y-3.5 text-xs font-mono">
+              <!-- Rank 1 -->
+              <div class="flex items-center gap-3">
+                <span class="w-5 h-5 rounded bg-emerald-500 text-black font-bold flex items-center justify-center shrink-0">1</span>
+                <span class="w-24 text-gray-200 shrink-0">Camera 04</span>
+                <div class="flex-1 h-2.5 bg-[#0B0D10] rounded-full overflow-hidden">
+                  <div class="h-full bg-gradient-to-r from-emerald-500 to-teal-300 rounded-full" style="width: 100%"></div>
+                </div>
+                <span class="w-10 text-right text-gray-300 font-semibold">392</span>
+              </div>
+              <!-- Rank 2 -->
+              <div class="flex items-center gap-3">
+                <span class="w-5 h-5 rounded bg-[#0B0D10] border border-[#1E232D] text-gray-400 flex items-center justify-center shrink-0">2</span>
+                <span class="w-24 text-gray-200 shrink-0">Camera 05</span>
+                <div class="flex-1 h-2.5 bg-[#0B0D10] rounded-full overflow-hidden">
+                  <div class="h-full bg-gradient-to-r from-emerald-500 to-teal-300 rounded-full" style="width: 80%"></div>
+                </div>
+                <span class="w-10 text-right text-gray-300 font-semibold">315</span>
+              </div>
+              <!-- Rank 3 -->
+              <div class="flex items-center gap-3">
+                <span class="w-5 h-5 rounded bg-[#0B0D10] border border-[#1E232D] text-gray-400 flex items-center justify-center shrink-0">3</span>
+                <span class="w-24 text-gray-200 shrink-0">Camera 01</span>
+                <div class="flex-1 h-2.5 bg-[#0B0D10] rounded-full overflow-hidden">
+                  <div class="h-full bg-gradient-to-r from-emerald-500 to-teal-300 rounded-full" style="width: 71%"></div>
+                </div>
+                <span class="w-10 text-right text-gray-300 font-semibold">280</span>
+              </div>
+              <!-- Rank 4 -->
+              <div class="flex items-center gap-3">
+                <span class="w-5 h-5 rounded bg-[#0B0D10] border border-[#1E232D] text-gray-400 flex items-center justify-center shrink-0">4</span>
+                <span class="w-24 text-gray-200 shrink-0">Camera 06</span>
+                <div class="flex-1 h-2.5 bg-[#0B0D10] rounded-full overflow-hidden">
+                  <div class="h-full bg-gradient-to-r from-emerald-500 to-teal-300 rounded-full" style="width: 64%"></div>
+                </div>
+                <span class="w-10 text-right text-gray-300 font-semibold">252</span>
+              </div>
+              <!-- Rank 5 -->
+              <div class="flex items-center gap-3">
+                <span class="w-5 h-5 rounded bg-[#0B0D10] border border-[#1E232D] text-gray-400 flex items-center justify-center shrink-0">5</span>
+                <span class="w-24 text-gray-200 shrink-0">Camera 03</span>
+                <div class="flex-1 h-2.5 bg-[#0B0D10] rounded-full overflow-hidden">
+                  <div class="h-full bg-gradient-to-r from-emerald-500 to-teal-300 rounded-full" style="width: 61%"></div>
+                </div>
+                <span class="w-10 text-right text-gray-300 font-semibold">239</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Middle Row: 24-Hour Event Summary SVG Area Chart (Screenshot 2 Center) -->
+      <div class="bg-[#14171D] border border-[#1E232D] rounded-2xl p-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+          <div>
+            <h3 class="text-base font-bold text-white">Event Summary</h3>
+            <p class="text-xs text-gray-400">Last 24 hours (per hour) • Peak detection window 14:00 – 17:00</p>
+          </div>
+          <div class="flex items-center gap-3">
+            <span id="chart-hover-readout" class="text-xs font-mono text-sky-400 bg-[#0B0D10] border border-[#1E232D] px-3 py-1 rounded-lg">
+              Peak: 194 events @ 16:00
+            </span>
+          </div>
+        </div>
+
+        <!-- Custom Responsive SVG Time-Series Line/Area Chart -->
+        <div class="w-full overflow-x-auto">
+          <svg id="event-summary-svg" viewBox="0 0 920 230" class="w-full h-56 select-none">
+            <defs>
+              <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#38BDF8" stop-opacity="0.35" />
+                <stop offset="100%" stop-color="#38BDF8" stop-opacity="0.0" />
+              </linearGradient>
+            </defs>
+            <!-- Horizontal Grid Lines -->
+            <g stroke="#1E232D" stroke-width="1">
+              <line x1="45" y1="20" x2="900" y2="20" />
+              <line x1="45" y1="60" x2="900" y2="60" />
+              <line x1="45" y1="100" x2="900" y2="100" />
+              <line x1="45" y1="140" x2="900" y2="140" />
+              <line x1="45" y1="180" x2="900" y2="180" />
+            </g>
+            <!-- Y-Axis Labels -->
+            <g fill="#6B7280" font-family="JetBrains Mono, monospace" font-size="10" text-anchor="end">
+              <text x="38" y="24">200</text>
+              <text x="38" y="64">150</text>
+              <text x="38" y="104">100</text>
+              <text x="38" y="144">50</text>
+              <text x="38" y="184">0</text>
+            </g>
+            <!-- Dynamic Path & Points injected via JS -->
+            <path id="chart-area-path" fill="url(#areaGrad)" />
+            <path id="chart-line-path" fill="none" stroke="#38BDF8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+            <g id="chart-points-group"></g>
+            <g id="chart-x-labels" fill="#6B7280" font-family="JetBrains Mono, monospace" font-size="9.5" text-anchor="middle"></g>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Bottom Row: Edge/Server Hardware Telemetry (Screenshot 2 Bottom) -->
+      <div>
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-bold uppercase tracking-wider text-gray-300">Edge Inference Node Telemetry</h3>
+          <span class="text-xs font-mono text-emerald-400">● Live Hardware Health</span>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+          
+          <!-- CPU Usage -->
+          <div class="bg-[#14171D] border border-[#1E232D] rounded-xl p-4">
+            <div class="flex items-center gap-2 text-xs text-gray-400 mb-2">
+              <svg class="w-4 h-4 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"/></svg>
+              <span>CPU Usage</span>
+            </div>
+            <div class="text-2xl font-mono font-bold text-white">49.4%</div>
+            <div class="text-[11px] font-mono text-gray-500 mt-1">Host CPU</div>
+            <div class="w-full h-1.5 bg-[#0B0D10] rounded-full mt-3 overflow-hidden">
+              <div class="h-full bg-sky-400 rounded-full" style="width: 49.4%"></div>
+            </div>
+          </div>
+
+          <!-- GPU Memory -->
+          <div class="bg-[#14171D] border border-[#1E232D] rounded-xl p-4">
+            <div class="flex items-center gap-2 text-xs text-gray-400 mb-2">
+              <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+              <span>GPU Memory</span>
+            </div>
+            <div class="text-2xl font-mono font-bold text-white">43.2%</div>
+            <div class="text-[11px] font-mono text-gray-500 mt-1">GPU memory</div>
+            <div class="w-full h-1.5 bg-[#0B0D10] rounded-full mt-3 overflow-hidden">
+              <div class="h-full bg-emerald-400 rounded-full" style="width: 43.2%"></div>
+            </div>
+          </div>
+
+          <!-- GPU Core -->
+          <div class="bg-[#14171D] border border-[#1E232D] rounded-xl p-4">
+            <div class="flex items-center gap-2 text-xs text-gray-400 mb-2">
+              <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+              <span>GPU Core</span>
+            </div>
+            <div class="text-2xl font-mono font-bold text-white">5%</div>
+            <div class="text-[11px] font-mono text-emerald-400 mt-1">Temperature: normal</div>
+            <div class="w-full h-1.5 bg-[#0B0D10] rounded-full mt-3 overflow-hidden">
+              <div class="h-full bg-amber-400 rounded-full" style="width: 15%"></div>
+            </div>
+          </div>
+
+          <!-- RAM Usage -->
+          <div class="bg-[#14171D] border border-[#1E232D] rounded-xl p-4">
+            <div class="flex items-center gap-2 text-xs text-gray-400 mb-2">
+              <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4"/></svg>
+              <span>RAM Usage</span>
+            </div>
+            <div class="text-2xl font-mono font-bold text-white">56.0%</div>
+            <div class="text-[11px] font-mono text-gray-500 mt-1">System memory</div>
+            <div class="w-full h-1.5 bg-[#0B0D10] rounded-full mt-3 overflow-hidden">
+              <div class="h-full bg-purple-400 rounded-full" style="width: 56%"></div>
+            </div>
+          </div>
+
+          <!-- Storage Usage -->
+          <div class="bg-[#14171D] border border-[#1E232D] rounded-xl p-4">
+            <div class="flex items-center gap-2 text-xs text-gray-400 mb-2">
+              <svg class="w-4 h-4 text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2"/></svg>
+              <span>Storage Usage</span>
+            </div>
+            <div class="text-2xl font-mono font-bold text-white">285.84 GB</div>
+            <div class="text-[11px] font-mono text-gray-500 mt-1">Event & video storage</div>
+            <div class="w-full h-1.5 bg-[#0B0D10] rounded-full mt-3 overflow-hidden">
+              <div class="h-full bg-rose-400 rounded-full" style="width: 56%"></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-[#1E232D] mt-14 py-6 bg-[#0B0D10]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-500">
+      <div class="flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+        <span>MDI AI Detection (Aegis v4.3) — Portfolio System Architecture & UI Showcase</span>
+      </div>
+      <div class="font-mono">
+        Computer Vision • Edge GPU Telemetry • ALPR • Spatial Analytics
+      </div>
+    </div>
+  </footer>
+
+  <!-- INTERACTIVE APPLICATION LOGIC -->
+  <script>
+    // =========================================================================
+    // 1. TAB SWITCHING LOGIC
+    // =========================================================================
+    function switchTab(tabName) {
+      const sections = ['library', 'overview', 'explorer', 'mockup'];
+      sections.forEach(sec => {
+        const el = document.getElementById(`view-${sec}`);
+        const btn = document.getElementById(`tab-${sec}`);
+        if (sec === tabName) {
+          el.classList.remove('hidden');
+          btn.classList.add('bg-[#1E232D]', 'text-white', 'shadow-sm');
+          btn.classList.remove('text-gray-400');
+        } else {
+          el.classList.add('hidden');
+          btn.classList.remove('bg-[#1E232D]', 'text-white', 'shadow-sm');
+          btn.classList.add('text-gray-400');
+        }
+      });
+
+      if (tabName === 'mockup') {
+        renderEventChart();
+      }
+    }
+
+    // =========================================================================
+    // 2. INTERACTIVE ARCHITECTURE NODE DATA & INSPECTOR
+    // =========================================================================
+    const archNodesData = [
+      {
+        badge: "STAGE 01 // INGESTION LAYER",
+        source: "Ref: Live View & Cameras Module",
+        title: "Multi-Stream RTSP & PTZ Camera Ingestion",
+        desc: "Connects heterogeneous IP cameras (Fixed Bullet, Dome, LPR-dedicated, and PTZ units like Camera 01) with sub-second frame buffering. Displays real-time stream health (Online 0.0ms) and supports dynamic multi-grid layout assignment with digital zoom up to 4.0x.",
+        code: `{
+  "cluster": "demo-site",
+  "active_streams": ["Camera 01", "Camera 04", "Camera 05"],
+  "transport": "WebRTC / Low-Latency RTSP",
+  "health_check": { "status": "ONLINE", "ping_ms": 0.0 }
+}`
+      },
+      {
+        badge: "STAGE 02 // NEURAL INFERENCE ENGINE",
+        source: "Ref: Edge GPU Compute Node",
+        title: "Hardware-Accelerated Multi-Model Computer Vision",
+        desc: "Runs concurrent object detection and classification models directly on edge GPU hardware. Simultaneously evaluates Human, Vehicle, License Plate, PPE, and Hazard neural weights on every keyframe.",
+        code: `{
+  "inference_backend": "GPU-accelerated",
+  "gpu_memory_used": "monitored",
+  "active_pipelines": ["human_v4", "vehicle_v4", "alpr_ocr_v3"],
+  "mode": "real-time"
+}`
+      },
+      {
+        badge: "STAGE 03 // CONFIDENCE GATEKEEPER",
+        source: "Ref: Edit Camera -> Detection Settings",
+        title: "Per-Camera Confidence Threshold Calibration",
+        desc: "Eliminates alert fatigue by allowing operators to tune individual confidence cutoffs (Low 1 to High 10) per camera and per model. Borderline detections below the configured threshold are suppressed before triggering notifications.",
+        code: `{
+  "camera_id": "camera_01",
+  "thresholds": {
+    "human_detection": { "enabled": true, "confidence": 0.70 },
+    "vehicle_detection": { "enabled": true, "confidence": 0.75 },
+    "license_plate": { "enabled": true, "confidence": 0.50 }
+  }
+}`
+      },
+      {
+        badge: "STAGE 04 // ALPR & EVENT PIPELINE",
+        source: "Ref: License Detection & Registered Plates",
+        title: "Automated OCR Extraction & Access List Matching",
+        desc: "Crops detected license plates from vehicle bounding boxes, extracts alphanumeric characters via OCR, and cross-references against Known (Whitelist) and Blacklisted vehicle databases in real time.",
+        code: `{
+  "event_type": "LICENSE_PLATE_DETECTED",
+  "plate_number": "KLM4821",
+  "camera": "Camera 02",
+  "confidence": 0.937,
+  "registry_status": "UNKNOWN"
+}`
+      },
+      {
+        badge: "STAGE 05 // COMMAND & TELEMETRY UI",
+        source: "Ref: Dashboard, Spatial Analytics & Forensic Search",
+        title: "Real-Time Command Center & Historical Forensics",
+        desc: "Streams verified events over WebSockets to the dark-mode command dashboard, updating 24-hour hourly velocity charts, spatial activity heatmaps, top-camera rankings, and searchable forensic archives.",
+        code: `{
+  "dashboard_sync": "WebSocket WSS",
+  "events_24h_total": 1478,
+  "top_camera": { "name": "Camera 04", "events": 392 },
+  "storage_retained": "monitored"
+}`
+      }
+    ];
+
+    function selectArchNode(index) {
+      document.querySelectorAll('.arch-node').forEach((node, idx) => {
+        if (idx === index) {
+          node.classList.add('border-2', 'border-sky-500', 'shadow-lg', 'shadow-sky-500/10');
+          node.classList.remove('border', 'border-[#1E232D]');
+        } else {
+          node.classList.remove('border-2', 'border-sky-500', 'shadow-lg', 'shadow-sky-500/10');
+          node.classList.add('border', 'border-[#1E232D]');
+        }
+      });
+
+      const data = archNodesData[index];
+      document.getElementById('arch-detail-badge').textContent = data.badge;
+      document.getElementById('arch-detail-source').textContent = data.source;
+      document.getElementById('arch-detail-title').textContent = data.title;
+      document.getElementById('arch-detail-desc').textContent = data.desc;
+      document.getElementById('arch-detail-code').textContent = data.code;
+    }
+
+    // =========================================================================
+    // 3. INTERACTIVE AI DETECTION CONFIGURATOR SANDBOX (Screenshot 1)
+    // =========================================================================
+    const detectionModels = [
+      { id: 'human', name: 'Human Detection', enabled: true, threshold: 7, icon: '👤' },
+      { id: 'vehicle', name: 'Vehicle Detection', enabled: true, threshold: 7, icon: '🚗' },
+      { id: 'lpr', name: 'License Plate Detection', enabled: true, threshold: 5, icon: '🪪' },
+      { id: 'ppe', name: 'Hard Hats & Safety Vests', enabled: false, threshold: 6, icon: '🦺' },
+    ];
+
+    const addonModules = [
+      'Animal Detection',
+      'Gun Detection',
+      'Slips & Fall Detection',
+      'Crash Detection',
+      'Fire and Smoke Detection',
+      'Shoplifting',
+      'Fighting',
+      'Face Detection'
+    ];
+
+    const sampleInferences = [
+      { id: 1, model: 'vehicle', label: 'Vehicle Detected (SUV)', camera: 'Camera 02', score: 9.4, time: '09:56 AM' },
+      { id: 2, model: 'vehicle', label: 'Vehicle Detected (Pickup)', camera: 'Camera 04', score: 9.3, time: '09:56 AM' },
+      { id: 3, model: 'lpr', label: 'Plate OCR: KLM4821', camera: 'Camera 02', score: 8.8, time: '09:55 AM' },
+      { id: 4, model: 'human', label: 'Human Detected (Perimeter)', camera: 'Camera 05', score: 8.2, time: '09:54 AM' },
+      { id: 5, model: 'vehicle', label: 'Vehicle Detected (Sedan)', camera: 'Camera 03', score: 6.8, time: '09:53 AM' },
+      { id: 6, model: 'human', label: 'Human Detected (Distant)', camera: 'Camera 01', score: 5.4, time: '09:51 AM' },
+      { id: 7, model: 'lpr', label: 'Plate OCR: HNP2764 (Glare)', camera: 'Camera 06', score: 4.6, time: '09:50 AM' },
+      { id: 8, model: 'ppe', label: 'Safety Vest Compliance', camera: 'Camera 04', score: 7.9, time: '09:49 AM' },
+    ];
+
+    function renderDetectionSandbox() {
+      const container = document.getElementById('active-models-container');
+      container.innerHTML = detectionModels.map((m, idx) => `
+        <div class="p-4 rounded-xl bg-[#0B0D10] border ${m.enabled ? 'border-[#2B3342]' : 'border-[#1E232D] opacity-70'} transition-all">
+          <div class="flex items-center justify-between mb-3">
+            <div class="flex items-center gap-2">
+              <span class="text-base">${m.icon}</span>
+              <span class="text-xs sm:text-sm font-semibold text-white">${m.name}</span>
+            </div>
+            <button onclick="toggleModel(${idx})" class="w-10 h-5 rounded-full transition-colors relative ${m.enabled ? 'bg-sky-500' : 'bg-[#272D38]'}">
+              <span class="w-3.5 h-3.5 rounded-full bg-white absolute top-0.5 transition-transform ${m.enabled ? 'left-5' : 'left-1'}"></span>
+            </button>
+          </div>
+          <div class="space-y-1.5">
+            <div class="flex justify-between text-[11px] text-gray-400">
+              <span>Confidence</span>
+              <span class="font-mono font-bold ${m.enabled ? 'text-emerald-400' : 'text-gray-500'}">${m.threshold}0%</span>
+            </div>
+            <input type="range" min="1" max="10" value="${m.threshold}" ${!m.enabled ? 'disabled' : ''} 
+              oninput="updateThreshold(${idx}, this.value)" class="mdi-slider" />
+            <div class="flex justify-between text-[10px] font-mono text-gray-500">
+              <span>Low</span>
+              <span class="text-emerald-400 font-bold">${m.threshold}</span>
+              <span>High</span>
+            </div>
+          </div>
+        </div>
+      `).join('');
+
+      // Render Enterprise Add-on Modules
+      const addonContainer = document.getElementById('addon-models-container');
+      addonContainer.innerHTML = addonModules.map(name => `
+        <div class="px-3.5 py-2.5 rounded-xl bg-[#0B0D10] border border-[#1E232D] flex items-center justify-between text-xs text-gray-400">
+          <span>${name}</span>
+          <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-[#14171D] text-gray-500 border border-[#1E232D]">LICENSED</span>
+        </div>
+      `).join('');
+
+      updateFilteredEvents();
+    }
+
+    function toggleModel(idx) {
+      detectionModels[idx].enabled = !detectionModels[idx].enabled;
+      renderDetectionSandbox();
+    }
+
+    function updateThreshold(idx, val) {
+      detectionModels[idx].threshold = parseInt(val, 10);
+      renderDetectionSandbox();
+    }
+
+    function setAllModels(state) {
+      detectionModels.forEach(m => m.enabled = state);
+      renderDetectionSandbox();
+    }
+
+    function updateFilteredEvents() {
+      const listEl = document.getElementById('simulated-events-list');
+      let passedCount = 0;
+
+      const html = sampleInferences.map(ev => {
+        const cfg = detectionModels.find(m => m.id === ev.model);
+        const isPassed = cfg && cfg.enabled && ev.score >= cfg.threshold;
+        if (isPassed) passedCount++;
+
+        return `
+          <div class="p-3 rounded-xl border transition-all flex items-center justify-between ${
+            isPassed 
+              ? 'bg-[#14171D] border-[#262E3D]' 
+              : 'bg-[#0B0D10]/50 border-[#1E232D]/50 opacity-40'
+          }">
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-semibold ${isPassed ? 'text-amber-300' : 'text-gray-500 line-through'}">${ev.label}</span>
+              </div>
+              <div class="text-[11px] font-mono text-gray-400 mt-0.5">${ev.camera} • ${ev.time}</div>
+            </div>
+            <div class="text-right font-mono">
+              <span class="px-2 py-0.5 rounded text-xs font-bold ${
+                isPassed ? 'bg-emerald-500/15 text-emerald-400' : 'bg-rose-500/10 text-rose-400'
+              }">
+                ${(ev.score * 10).toFixed(1)}%
+              </span>
+              <div class="text-[10px] mt-0.5 ${isPassed ? 'text-emerald-500' : 'text-gray-500'}">
+                ${isPassed ? 'ALERT SENT' : 'SUPPRESSED'}
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      listEl.innerHTML = html;
+      document.getElementById('filtered-count-badge').textContent = `${passedCount} / ${sampleInferences.length} Passed`;
+    }
+
+    // =========================================================================
+    // 4. INTERACTIVE ALPR & REGISTRY DATA (Screenshot 3)
+    // =========================================================================
+    const alprData = [
+      { plate: 'KLM4821', camera: 'Camera 02', status: 'Unknown', vehicle: 'Black SUV', conf: '93.7%' },
+      { plate: 'RTV9035', camera: 'Camera 01', status: 'Known', vehicle: 'Silver Sedan', conf: '95.1%' },
+      { plate: 'HNP2764', camera: 'Camera 01', status: 'Unknown', vehicle: 'Large SUV', conf: '95.3%' },
+      { plate: 'DXW6150', camera: 'Camera 04', status: 'Known', vehicle: 'White Semi Truck', conf: '91.8%' },
+      { plate: 'GZT3478', camera: 'Camera 06', status: 'Blacklisted', vehicle: 'Commercial Truck', conf: '94.7%' },
+      { plate: 'BQY8092', camera: 'Camera 06', status: 'Unknown', vehicle: 'Dark Sedan', conf: '90.4%' },
+      { plate: 'MJC5516', camera: 'Camera 01', status: 'Known', vehicle: 'White SUV', conf: '94.2%' },
+      { plate: 'SRN7043', camera: 'Camera 06', status: 'Blacklisted', vehicle: 'Yellow Freight', conf: '89.9%' },
+    ];
+
+    let activePlateFilter = 'All';
+
+    function filterPlates(status) {
+      activePlateFilter = status;
+      ['All', 'Unknown', 'Known', 'Blacklisted'].forEach(btnStatus => {
+        const btn = document.getElementById(`plate-filter-${btnStatus}`);
+        if (btnStatus === status) {
+          btn.className = 'plate-filter-btn px-3 py-1.5 rounded-lg text-xs font-medium bg-amber-500 text-black font-semibold transition';
+        } else {
+          btn.className = 'plate-filter-btn px-3 py-1.5 rounded-lg text-xs font-medium bg-[#0B0D10] text-gray-300 border border-[#1E232D] hover:border-gray-600 transition';
+        }
+      });
+      renderALPRGrid();
+    }
+
+    function updatePlateStatus(plateNumber, newStatus) {
+      const item = alprData.find(p => p.plate === plateNumber);
+      if (item) {
+        item.status = newStatus;
+        renderALPRGrid();
+      }
+    }
+
+    function renderALPRGrid() {
+      const grid = document.getElementById('alpr-cards-grid');
+      const filtered = activePlateFilter === 'All' 
+        ? alprData 
+        : alprData.filter(p => p.status === activePlateFilter);
+
+      grid.innerHTML = filtered.map(item => {
+        const statusBadge = item.status === 'Known'
+          ? 'text-emerald-400'
+          : item.status === 'Blacklisted'
+            ? 'text-rose-400'
+            : 'text-gray-400';
+
+        return `
+          <div class="bg-[#0B0D10] border border-[#1E232D] rounded-xl overflow-hidden flex flex-col justify-between">
+            <!-- Stylized OCR Plate Capture Header -->
+            <div class="h-24 bg-gradient-to-br from-[#1A1F29] to-[#0E1117] p-3 flex flex-col justify-between relative border-b border-[#1E232D]">
+              <div class="flex items-center justify-between text-[10px] font-mono text-gray-400">
+                <span>${item.vehicle}</span>
+                <span class="text-emerald-400 bg-black/50 px-1.5 py-0.5 rounded">${item.conf}</span>
+              </div>
+              <!-- Simulated License Plate Crop -->
+              <div class="mx-auto px-4 py-1 rounded bg-slate-200 text-slate-900 font-mono font-extrabold text-sm tracking-widest border-2 border-sky-500 shadow">
+                ${item.plate}
+              </div>
+            </div>
+
+            <div class="p-3.5">
+              <div class="font-mono font-bold text-white text-sm">${item.plate}</div>
+              <div class="text-[11px] text-gray-400 mt-0.5">
+                ${item.camera} • <span class="${statusBadge} font-medium">${item.status}</span>
+              </div>
+              <div class="flex items-center gap-3 mt-3 pt-2.5 border-t border-[#1E232D] text-[10px] font-mono font-bold">
+                <button onclick="updatePlateStatus('${item.plate}', 'Known')" class="text-sky-400 hover:text-sky-300 transition">
+                  WHITELIST
+                </button>
+                <button onclick="updatePlateStatus('${item.plate}', 'Blacklisted')" class="text-rose-400 hover:text-rose-300 transition">
+                  BLACKLIST
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // =========================================================================
+    // 5. 24-HOUR EVENT SUMMARY SVG CHART (Screenshot 2)
+    // =========================================================================
+    const hourlyEvents = [
+      { hour: '10:00', count: 85 }, { hour: '11:00', count: 88 }, { hour: '12:00', count: 120 },
+      { hour: '13:00', count: 119 }, { hour: '14:00', count: 176 }, { hour: '15:00', count: 160 },
+      { hour: '16:00', count: 194 }, { hour: '17:00', count: 178 }, { hour: '18:00', count: 76 },
+      { hour: '19:00', count: 70 }, { hour: '20:00', count: 32 }, { hour: '21:00', count: 28 },
+      { hour: '22:00', count: 20 }, { hour: '23:00', count: 2 },  { hour: '00:00', count: 12 },
+      { hour: '01:00', count: 21 }, { hour: '02:00', count: 3 },  { hour: '03:00', count: 3 },
+      { hour: '04:00', count: 3 },  { hour: '05:00', count: 7 },  { hour: '06:00', count: 16 },
+      { hour: '07:00', count: 23 }, { hour: '08:00', count: 52 }
+    ];
+
+    function renderEventChart() {
+      const startX = 55;
+      const endX = 890;
+      const baseY = 180;
+      const topY = 20;
+      const maxVal = 200;
+
+      const stepX = (endX - startX) / (hourlyEvents.length - 1);
+
+      const coords = hourlyEvents.map((d, i) => {
+        const x = startX + i * stepX;
+        const y = baseY - (d.count / maxVal) * (baseY - topY);
+        return { x, y, ...d };
+      });
+
+      // Build smooth SVG path
+      let lineD = `M ${coords[0].x} ${coords[0].y}`;
+      for (let i = 1; i < coords.length; i++) {
+        const prev = coords[i - 1];
+        const curr = coords[i];
+        const cpX = (prev.x + curr.x) / 2;
+        lineD += ` C ${cpX} ${prev.y}, ${cpX} ${curr.y}, ${curr.x} ${curr.y}`;
+      }
+
+      const areaD = `${lineD} L ${coords[coords.length - 1].x} ${baseY} L ${coords[0].x} ${baseY} Z`;
+
+      document.getElementById('chart-line-path').setAttribute('d', lineD);
+      document.getElementById('chart-area-path').setAttribute('d', areaD);
+
+      const pointsGroup = document.getElementById('chart-points-group');
+      const labelsGroup = document.getElementById('chart-x-labels');
+
+      pointsGroup.innerHTML = coords.map(pt => `
+        <circle cx="${pt.x}" cy="${pt.y}" r="3.5" fill="#0B0D10" stroke="#38BDF8" stroke-width="2" 
+          class="cursor-pointer hover:r-5 transition-all"
+          onmouseover="document.getElementById('chart-hover-readout').textContent = '${pt.hour} — ${pt.count} detections'" />
+      `).join('');
+
+      labelsGroup.innerHTML = coords.map((pt, i) => {
+        if (i % 2 === 0 || i === coords.length - 1) {
+          return `<text x="${pt.x}" y="202">${pt.hour}</text>`;
+        }
+        return '';
+      }).join('');
+    }
+
+    // =========================================================================
+    // 6. DETECTION LIBRARY (animated canvas scenes)
+    // =========================================================================
+    (function () {
+      const W = 640, H = 360, T = 7;
+      const cv = document.getElementById('lib-canvas');
+      if (!cv) return;
+      const c = cv.getContext('2d');
+      const GREEN = '#10B981', RED = '#EF4444', AMBER = '#F59E0B', BLUE = '#38BDF8';
+      const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+      const ease = v => v * v * (3 - 2 * v);
+
+      // ---- drawing helpers ----
+      function bg(kind) {
+        const g = c.createLinearGradient(0, 0, 0, H);
+        if (kind === 'indoor') { g.addColorStop(0, '#1b2230'); g.addColorStop(.6, '#161c27'); g.addColorStop(1, '#10151d'); }
+        else { g.addColorStop(0, '#202a38'); g.addColorStop(.55, '#1a212c'); g.addColorStop(1, '#12171f'); }
+        c.fillStyle = g; c.fillRect(0, 0, W, H);
+        if (kind === 'road') {
+          c.fillStyle = '#242c38'; c.beginPath(); c.moveTo(0, 215); c.lineTo(W, 215); c.lineTo(W, H); c.lineTo(0, H); c.fill();
+          c.strokeStyle = '#46546b'; c.lineWidth = 2; c.setLineDash([22, 18]); c.beginPath(); c.moveTo(0, 285); c.lineTo(W, 285); c.stroke(); c.setLineDash([]);
+        } else if (kind === 'yard') {
+          c.fillStyle = '#212a36'; c.fillRect(0, 230, W, H - 230);
+          c.fillStyle = '#18202b'; for (let i = 0; i < 6; i++) c.fillRect(30 + i * 110, 120, 60, 110);
+        } else {
+          c.fillStyle = '#212a37'; c.fillRect(0, 260, W, H - 260);
+          c.fillStyle = '#18202b'; for (let i = 0; i < 4; i++) c.fillRect(40 + i * 160, 50, 90, 120);
+        }
+      }
+      function person(x, y, h, o = {}) {
+        const t = o.t || 0, sw = o.walk ? Math.sin(t * 9 + x * .05) * h * .12 : 0;
+        c.save(); c.translate(x, y);
+        if (o.fall) c.rotate(o.fall * Math.PI / 2 * (o.dir || 1));
+        const col = o.color || '#9aa6b8';
+        c.strokeStyle = col; c.fillStyle = col; c.lineCap = 'round';
+        c.lineWidth = h * .075;
+        c.beginPath(); c.moveTo(0, -h * .46); c.lineTo(-sw, 0); c.moveTo(0, -h * .46); c.lineTo(sw, 0); c.stroke();
+        c.lineWidth = h * .13; c.beginPath(); c.moveTo(0, -h * .8); c.lineTo(0, -h * .46); c.stroke();
+        if (o.vest) { c.fillStyle = '#f97316'; c.fillRect(-h * .08, -h * .78, h * .16, h * .3); c.fillStyle = col; }
+        c.lineWidth = h * .06;
+        const arms = o.arms || 'down'; c.beginPath();
+        if (arms === 'down') { c.moveTo(0, -h * .74); c.lineTo(sw * .8, -h * .45); c.moveTo(0, -h * .74); c.lineTo(-sw * .8, -h * .45); }
+        else if (arms === 'gun') { c.moveTo(0, -h * .74); c.lineTo(h * .3, -h * .78); c.moveTo(0, -h * .74); c.lineTo(-h * .08, -h * .46); }
+        else if (arms === 'punch') { const p = Math.sin(t * 12 + (o.ph || 0)) * .5 + .5; c.moveTo(0, -h * .74); c.lineTo((o.dir2 || 1) * h * (.18 + p * .22), -h * .72); c.moveTo(0, -h * .74); c.lineTo(-(o.dir2 || 1) * h * .1, -h * .5); }
+        else if (arms === 'carry') { c.moveTo(0, -h * .74); c.lineTo(h * .18, -h * .55); }
+        c.stroke();
+        c.beginPath(); c.arc(0, -h * .92, h * .09, 0, 7); c.fill();
+        if (o.hat) { c.fillStyle = '#facc15'; c.beginPath(); c.arc(0, -h * .94, h * .1, Math.PI, 0); c.fill(); c.fillRect(-h * .11, -h * .945, h * .22, h * .02); }
+        if (o.gun) { c.strokeStyle = '#0b0d10'; c.lineWidth = h * .05; c.beginPath(); c.moveTo(h * .3, -h * .78); c.lineTo(h * .42, -h * .78); c.moveTo(h * .32, -h * .78); c.lineTo(h * .32, -h * .72); c.stroke(); }
+        c.restore();
+        return { x: x - h * .2, y: y - h, w: h * .4, h: h };
+      }
+      function car(x, y, w, o = {}) {
+        const h = w * .38; c.save(); c.translate(x, y);
+        c.fillStyle = o.color || '#3a475c';
+        c.beginPath(); c.moveTo(-w / 2, -h * .25); c.lineTo(-w * .42, -h * .55); c.quadraticCurveTo(-w * .3, -h, -w * .1, -h); c.lineTo(w * .18, -h);
+        c.quadraticCurveTo(w * .36, -h * .98, w * .44, -h * .55); c.lineTo(w / 2, -h * .35); c.lineTo(w / 2, 0); c.lineTo(-w / 2, 0); c.closePath(); c.fill();
+        c.fillStyle = '#1a2230'; c.beginPath(); c.moveTo(-w * .3, -h * .55); c.quadraticCurveTo(-w * .22, -h * .9, -w * .08, -h * .9); c.lineTo(w * .15, -h * .9); c.quadraticCurveTo(w * .3, -h * .85, w * .35, -h * .55); c.closePath(); c.fill();
+        c.fillStyle = '#0a0f18'; [-w * .3, w * .3].forEach(wx => { c.beginPath(); c.arc(wx, 0, h * .24, 0, 7); c.fill(); c.strokeStyle = '#56647c'; c.lineWidth = 2; c.stroke(); });
+        c.restore();
+        return { x: x - w / 2, y: y - h, w: w, h: h + 4 };
+      }
+      function box(b, col, label, pad = 6) {
+        c.strokeStyle = col; c.lineWidth = 1.8; c.strokeRect(b.x - pad, b.y - pad, b.w + pad * 2, b.h + pad * 2);
+        c.font = '600 11px "JetBrains Mono", monospace';
+        const tw = c.measureText(label).width + 12;
+        c.fillStyle = col; c.fillRect(b.x - pad, b.y - pad - 17, tw, 17);
+        c.fillStyle = '#0b0d10'; c.fillText(label, b.x - pad + 6, b.y - pad - 5);
+      }
+      function text(s, x, y, col = '#cbd5e1', size = 12, align = 'left') { c.font = `600 ${size}px "JetBrains Mono", monospace`; c.fillStyle = col; c.textAlign = align; c.fillText(s, x, y); c.textAlign = 'left'; }
+      const lab = (n, base) => `${n} ${(base + (Math.sin(base * 7) * 2)).toFixed(0)}%`;
+      let alertOn = false;
+      const alertEl = document.getElementById('lib-alert');
+      const setAlert = (on, txt) => { if (on !== alertOn || txt) { alertOn = on; alertEl.classList.toggle('hidden', !on); if (txt) alertEl.textContent = txt; } };
+
+      // ---- scenes ----
+      const L = {
+        human(t, u) {
+          bg('road'); setAlert(false);
+          for (let k = 0; k < 3; k++) {
+            const x = ((u * (1 + k * .15) + k * .33) % 1) * (W + 120) - 60, y = 300 - k * 28, h = 105 - k * 12;
+            const b = person(x, y, h, { walk: true, t }); box(b, GREEN, lab('person', 92 + k * 2));
+          }
+        },
+        vehicle(t, u) {
+          bg('road'); setAlert(false);
+          const a = ((u * 1.0) % 1) * (W + 300) - 150, b2 = W + 150 - ((u * 1.3 + .4) % 1) * (W + 300);
+          const A = car(a, 300, 170, { color: '#46546b' }); box(A, GREEN, lab('car', 94));
+          const B = car(b2, 250, 130, { color: '#5a6b84' }); box(B, GREEN, lab('suv', 91));
+        },
+        plate(t, u) {
+          bg('road'); setAlert(false);
+          const x = 90 + ease(clamp(u / .6, 0, 1)) * 280, w = 190 + ease(clamp(u / .6, 0, 1)) * 40;
+          const b = car(x, 310, w); box(b, GREEN, lab('vehicle', 95));
+          const px = x + w * .34, py = 296, pw = 44, ph = 14;
+          c.fillStyle = '#e5e7eb'; c.fillRect(px, py - ph, pw, ph);
+          box({ x: px, y: py - ph, w: pw, h: ph }, AMBER, 'plate', 3);
+          // OCR inset
+          c.fillStyle = 'rgba(11,13,16,.92)'; c.fillRect(W - 210, 18, 192, 86); c.strokeStyle = '#2B3342'; c.strokeRect(W - 210, 18, 192, 86);
+          text('PLATE CROP · OCR', W - 200, 36, '#94a3b8', 10);
+          c.fillStyle = '#e5e7eb'; c.fillRect(W - 196, 46, 164, 34);
+          const s = 'KLM 4821', n = Math.floor(clamp((u - .35) / .35, 0, 1) * s.length);
+          text(s.slice(0, n), W - 188, 72, '#0b0d10', 24);
+          text(n >= s.length ? 'UNKNOWN · registry check' : 'reading…', W - 200, 98, n >= s.length ? AMBER : '#64748b', 10);
+        },
+        face(t, u) {
+          bg('indoor'); setAlert(false);
+          const x = 320 + Math.sin(t * .8) * 30, y = 330;
+          const b = person(x, y, 250, { walk: false, t, color: '#a7b2c4' });
+          const fx = x - 28, fy = y - 250 * .92 - 28;
+          box({ x: fx, y: fy, w: 56, h: 56 }, BLUE, lab('face', 96), 2);
+          c.fillStyle = BLUE; [[-10, -4], [10, -4], [0, 8]].forEach(p => { c.beginPath(); c.arc(x + p[0], y - 250 * .92 + p[1], 2.2, 0, 7); c.fill(); });
+        },
+        ppe(t, u) {
+          bg('yard'); setAlert(u > .25 && u < .98, 'PPE VIOLATION');
+          const a = person(210 + Math.sin(t) * 10, 320, 150, { walk: true, t, hat: true, vest: true }); box(a, GREEN, 'hard hat ✓ vest ✓');
+          const b = person(430 + Math.sin(t + 2) * 10, 320, 150, { walk: true, t: t + 1 }); box(b, RED, 'no hard hat · no vest');
+        },
+        fall(t, u) {
+          bg('indoor');
+          const walkEnd = .42, f = clamp((u - walkEnd) / .14, 0, 1);
+          const x = 140 + clamp(u / walkEnd, 0, 1) * 220;
+          const b = person(x, 320, 170, { walk: u < walkEnd, t, fall: ease(f), dir: 1 });
+          const bb = f < .5 ? b : { x: x - 6, y: 320 - 170 * .25, w: 170, h: 170 * .25 };
+          const bx = { x: b.x + (bb.x - b.x) * ease(f), y: b.y + (bb.y - b.y) * ease(f), w: b.w + (bb.w - b.w) * ease(f), h: b.h + (bb.h - b.h) * ease(f) };
+          const fell = f > .95; box(bx, fell ? RED : GREEN, fell ? 'fall detected' : lab('person', 94)); setAlert(fell && u < .98, 'FALL DETECTED');
+        },
+        fire(t, u) {
+          bg('yard'); const on = u > .15; setAlert(on && u < .98, 'FIRE / SMOKE');
+          const bx = 430, by = 310;
+          if (on) {
+            const g = clamp((u - .15) / .3, 0, 1);
+            for (let i = 0; i < 14; i++) { const p = (t * .6 + i / 14) % 1; c.fillStyle = `rgba(148,163,184,${(1 - p) * .35 * g})`; c.beginPath(); c.arc(bx + Math.sin(p * 6 + i) * 24 * p, by - 70 - p * 150, 14 + p * 26, 0, 7); c.fill(); }
+            for (let i = 0; i < 6; i++) { const fl = Math.sin(t * 14 + i * 2) * 6, hh = (50 + i % 3 * 18) * g; c.fillStyle = i % 2 ? '#f59e0b' : '#ef4444'; c.beginPath(); c.moveTo(bx - 34 + i * 12, by); c.quadraticCurveTo(bx - 34 + i * 12 + fl, by - hh * .6, bx - 28 + i * 12, by - hh); c.quadraticCurveTo(bx - 20 + i * 12, by - hh * .5, bx - 12 + i * 12, by); c.fill(); }
+            box({ x: bx - 44, y: by - 88 * g, w: 88, h: 88 * g }, AMBER, lab('fire', 93), 4);
+            box({ x: bx - 70, y: by - 230 * g, w: 140, h: 130 * g }, '#94a3b8', lab('smoke', 88), 2);
+          } else { c.fillStyle = '#2a3446'; c.fillRect(bx - 34, by - 8, 70, 8); }
+        },
+        animal(t, u) {
+          bg('yard'); setAlert(false);
+          const x = ((u * 1.2) % 1) * (W + 140) - 70, y = 300, s = 1;
+          c.fillStyle = '#8b7d6b'; c.beginPath(); c.ellipse(x, y - 34, 40, 18, 0, 0, 7); c.fill();
+          c.beginPath(); c.arc(x + 42, y - 48, 13, 0, 7); c.fill();
+          c.fillRect(x + 50, y - 50, 14, 7);
+          c.strokeStyle = '#8b7d6b'; c.lineWidth = 6; c.lineCap = 'round';
+          [-26, -12, 14, 28].forEach((lx, i) => { const sw = Math.sin(t * 12 + i * 1.6) * 9; c.beginPath(); c.moveTo(x + lx, y - 24); c.lineTo(x + lx + sw, y); c.stroke(); });
+          c.beginPath(); c.moveTo(x - 40, y - 40); c.lineTo(x - 58, y - 56 + Math.sin(t * 10) * 4); c.stroke();
+          box({ x: x - 56, y: y - 70, w: 130, h: 72 }, GREEN, lab('animal', 90));
+        },
+        weapon(t, u) {
+          bg('indoor'); const on = u > .3; setAlert(on && u < .98, 'WEAPON DETECTED');
+          const b = person(300, 330, 190, { arms: on ? 'gun' : 'down', gun: on, t, walk: !on });
+          box(b, on ? RED : GREEN, on ? lab('weapon', 95) : lab('person', 93));
+          if (on) box({ x: 300 + 190 * .3 - 4, y: 330 - 190 * .78 - 12, w: 56, h: 26 }, RED, '', 2);
+          const o = person(540 - (u * 60), 320, 140, { walk: true, t }); box(o, GREEN, lab('person', 91));
+        },
+        fighting(t, u) {
+          bg('indoor'); const on = u > .22; setAlert(on && u < .98, 'AGGRESSIVE BEHAVIOR');
+          const gap = on ? 54 : 54 + (1 - clamp(u / .22, 0, 1)) * 140;
+          const a = person(320 - gap / 2, 320, 170, { arms: on ? 'punch' : 'down', ph: 0, dir2: 1, t, walk: !on });
+          const b = person(320 + gap / 2, 320, 170, { arms: on ? 'punch' : 'down', ph: 2, dir2: -1, t, walk: !on, color: '#b6c0d1' });
+          const bx = { x: a.x, y: a.y, w: b.x + b.w - a.x, h: a.h };
+          box(bx, on ? RED : GREEN, on ? lab('aggressive behavior', 94) : 'tracking 2 people');
+          if (on) { c.fillStyle = 'rgba(239,68,68,.08)'; c.fillRect(bx.x - 6, bx.y - 6, bx.w + 12, bx.h + 12); }
+          text(on ? 'temporal analysis → verified' : 'temporal analysis…', 18, H - 14, on ? RED : '#64748b', 11);
+        },
+        shoplifting(t, u) {
+          bg('indoor'); const on = u > .55; setAlert(on && u < .98, 'SUSPICIOUS ACTIVITY');
+          c.fillStyle = '#2a3446'; c.fillRect(70, 110, 170, 160); c.fillStyle = '#18202b'; for (let r = 0; r < 3; r++) c.fillRect(76, 142 + r * 50, 158, 4);
+          const items = [[90, 120], [130, 120], [170, 120], [90, 172], [130, 172], [170, 172]];
+          const mv = clamp((u - .25) / .3, 0, 1);
+          items.forEach((p, i) => { let x = p[0], y = p[1]; if (i === 4) { x = x + (300 - x) * ease(mv); y = y + (246 - y) * ease(mv); } c.fillStyle = i === 4 ? AMBER : '#475569'; c.fillRect(x, y, 26, 22); });
+          const b = person(310, 320, 190, { arms: 'carry', t });
+          box(b, on ? AMBER : GREEN, on ? lab('concealment', 90) : lab('person', 93));
+          text('dwell at shelf · item removed', 18, H - 14, '#64748b', 11);
+        },
+        tamper(t, u) {
+          bg('road'); const dwell = Math.max(0, (u - .3)) * 40, on = u > .68; setAlert(on && u < .98, 'VEHICLE TAMPERING');
+          const cb = car(380, 322, 300); box(cb, GREEN, lab('vehicle · parked', 96));
+          const px = 180 + ease(clamp(u / .3, 0, 1)) * 80 + (u > .3 ? Math.sin(t * 5) * 5 : 0);
+          const b = person(px, 330, 190, { walk: u < .3, t, arms: u > .3 ? 'carry' : 'down' });
+          box(b, on ? RED : AMBER, on ? 'tampering' : `person · dwell ${dwell.toFixed(0)}s`);
+          c.setLineDash([5, 4]); c.strokeStyle = on ? RED : AMBER; c.beginPath(); c.moveTo(px + 30, 250); c.lineTo(300, 250); c.stroke(); c.setLineDash([]);
+        },
+        crash(t, u) {
+          bg('road'); const hit = u > .46; setAlert(hit && u < .98, 'CRASH DETECTED');
+          const m = clamp(u / .46, 0, 1);
+          const ax = hit ? 300 + Math.sin(t * 40) * 1.5 : 40 + ease(m) * 260, bx2 = hit ? 345 + Math.sin(t * 40 + 1) * 1.5 : 600 - ease(m) * 255;
+          c.setLineDash([4, 4]); c.strokeStyle = '#64748b'; c.beginPath(); c.moveTo(40, 300); c.lineTo(ax, 300); c.moveTo(600, 300); c.lineTo(bx2, 300); c.stroke(); c.setLineDash([]);
+          const A = car(ax, 300, 170, { color: '#46546b' }), B = car(bx2, 300, 170, { color: '#5a6b84' });
+          box(A, hit ? RED : GREEN, hit ? 'crash' : lab('car', 94)); box(B, hit ? RED : GREEN, hit ? 'crash' : lab('car', 92));
+          if (hit) for (let i = 0; i < 10; i++) { const a = i * .63 + t * 3, r = 10 + ((t * 40 + i * 9) % 38); c.fillStyle = AMBER; c.fillRect(322 + Math.cos(a) * r, 262 + Math.sin(a) * r, 3, 3); }
+        },
+        traffic(t, u) {
+          bg('road'); setAlert(false);
+          const cars = [0, .27, .55, .8], countX = 320; let count = 0;
+          c.strokeStyle = AMBER; c.lineWidth = 2; c.setLineDash([6, 4]); c.beginPath(); c.moveTo(countX, 190); c.lineTo(countX, H); c.stroke(); c.setLineDash([]);
+          cars.forEach((o, i) => {
+            const p = (u + o) % 1, x = -100 + p * (W + 200), y = i % 2 ? 260 : 312, w = 120 + i * 14;
+            if (x > countX) count++;
+            c.setLineDash([3, 3]); c.strokeStyle = 'rgba(16,185,129,.5)'; c.beginPath(); c.moveTo(x - 140, y - 20); c.lineTo(x, y - 20); c.stroke(); c.setLineDash([]);
+            const b = car(x, y, w, { color: i % 2 ? '#5a6b84' : '#46546b' }); box(b, GREEN, `#${40 + i} car`);
+          });
+          c.fillStyle = 'rgba(11,13,16,.9)'; c.fillRect(W - 170, 18, 152, 54); c.strokeStyle = '#2B3342'; c.strokeRect(W - 170, 18, 152, 54);
+          text('VEHICLE COUNT', W - 160, 38, '#94a3b8', 10); text(String(18 + count + Math.floor(t / T * 0)), W - 160, 62, AMBER, 22);
+          text('count line', countX + 8, 204, AMBER, 10);
+        },
+      };
+
+      const FLOW = {
+        human: ['Detect', 'Track', 'Count / dwell', 'Event'], vehicle: ['Detect', 'Classify', 'Track', 'Event'],
+        plate: ['Detect vehicle', 'Crop plate', 'OCR', 'Registry match'], face: ['Detect', 'Crop', 'Recognize', 'Event'],
+        ppe: ['Detect person', 'Check gear', 'Verify', 'Alert'], fall: ['Detect person', 'Track pose', 'Temporal check', 'Alert'],
+        fire: ['Detect', 'Persist check', 'Verify', 'Alert'], animal: ['Detect', 'Classify', 'Event'],
+        weapon: ['Detect person', 'Detect object', 'Verify', 'Alert'], fighting: ['Detect people', 'Track', 'Temporal analysis', 'Verify', 'Alert'],
+        shoplifting: ['Detect', 'Track', 'Behavior analysis', 'Alert'], tamper: ['Detect vehicle + person', 'Track proximity', 'Dwell & behavior', 'Verify', 'Alert'],
+        crash: ['Detect', 'Track', 'Trajectory analysis', 'Verify', 'Alert'], traffic: ['Detect', 'Track', 'Line crossing', 'Counts & heatmap'],
+      };
+      const TYPES = [
+        { id: 'human', name: 'Human Detection', group: 'Core', desc: 'Finds and tracks people in every frame, with a confidence threshold you can tune per camera.' },
+        { id: 'vehicle', name: 'Vehicle Detection', group: 'Core', desc: 'Detects and classifies cars, SUVs and trucks and keeps a track on each one.' },
+        { id: 'plate', name: 'License Plate Recognition', group: 'Core', desc: 'Crops plates from detected vehicles, reads them with OCR and matches them against known and blacklisted lists.' },
+        { id: 'face', name: 'Face Detection', group: 'Core', desc: 'Locates faces for access control and identification workflows.' },
+        { id: 'ppe', name: 'Hard Hats & Safety Vests', group: 'Safety', desc: 'Checks that workers wear required protective gear and flags violations.' },
+        { id: 'fall', name: 'Slip & Fall Detection', group: 'Safety', desc: 'Recognizes a person going down using pose and motion over time, then alerts.' },
+        { id: 'fire', name: 'Fire & Smoke Detection', group: 'Safety', desc: 'Spots flames and smoke early and confirms they persist before alerting.' },
+        { id: 'animal', name: 'Animal Detection', group: 'Safety', desc: 'Distinguishes animals from people and vehicles to cut false alarms.' },
+        { id: 'weapon', name: 'Weapon Detection', group: 'Security', desc: 'Identifies a visible firearm held by a person and raises an immediate alert.' },
+        { id: 'fighting', name: 'Aggressive Behavior', group: 'Security', desc: 'Recognizes fighting and criminal behavior from motion over time, then verifies before alerting.' },
+        { id: 'shoplifting', name: 'Shoplifting', group: 'Security', desc: 'Analyzes behavior around shelves, such as concealing items, to flag suspicious activity.' },
+        { id: 'tamper', name: 'Vehicle Tampering', group: 'Security', desc: 'Detects suspicious interaction with parked vehicles using proximity, dwell time and behavior.' },
+        { id: 'crash', name: 'Crash Detection', group: 'Traffic', desc: 'Detects collisions from vehicle tracks and trajectories, verified over time.' },
+        { id: 'traffic', name: 'Traffic Analysis', group: 'Traffic', desc: 'Counts vehicles crossing lines and builds flow statistics and heatmaps.' },
+      ];
+      const GROUPS = { Core: 'text-sky-400', Safety: 'text-emerald-400', Security: 'text-rose-400', Traffic: 'text-amber-400' };
+      let cur = 'human';
+
+      function renderList() {
+        const list = document.getElementById('lib-list');
+        list.innerHTML = Object.keys(GROUPS).map(g => `
+          <div>
+            <div class="text-[11px] font-mono uppercase tracking-wider ${GROUPS[g]} mb-2">${g} detection</div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              ${TYPES.filter(t => t.group === g).map(t => `
+                <button onclick="selectDetection('${t.id}')" data-id="${t.id}" class="lib-btn text-left px-3.5 py-2.5 rounded-xl border text-sm transition ${t.id === cur ? 'bg-[#1A1E26] border-sky-500/60 text-white' : 'bg-[#0B0D10] border-[#1E232D] text-gray-300 hover:border-gray-600'}">
+                  ${t.name}
+                </button>`).join('')}
+            </div>
+          </div>`).join('');
+      }
+      window.selectDetection = function (id) {
+        cur = id; const t = TYPES.find(x => x.id === id);
+        document.getElementById('lib-title').textContent = t.name;
+        document.getElementById('lib-desc').textContent = t.desc;
+        const g = document.getElementById('lib-group'); g.textContent = t.group.toUpperCase();
+        document.getElementById('lib-status').textContent = t.group === 'Core' ? 'Core model' : 'Modular add-on';
+        document.getElementById('lib-flow').innerHTML = FLOW[id].map((s, i) => (i ? '<span class="text-gray-600">→</span>' : '') + `<span class="px-2 py-1 rounded bg-[#14171D] border border-[#1E232D] text-gray-300">${s}</span>`).join('');
+        renderList(); setAlert(false);
+      };
+      selectDetection('human');
+
+      const t0 = performance.now();
+      (function loop() {
+        if (cv.offsetParent !== null) {
+          const t = (performance.now() - t0) / 1000, u = (t % T) / T;
+          c.clearRect(0, 0, W, H); L[cur](t, u);
+        }
+        requestAnimationFrame(loop);
+      })();
+    })();
+
+    // Initialize interactive components on load
+    window.addEventListener('DOMContentLoaded', () => {
+      renderDetectionSandbox();
+      renderALPRGrid();
+      renderEventChart();
+      switchTab('library');
+    });
+  </script>
+</body>
+</html>
